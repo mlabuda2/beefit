@@ -1,0 +1,33 @@
+.container-fluid {
+  padding: 0 !important; }
+
+#favorite-food, #calorie-burner {
+  margin: 5%;
+  width: 100%;
+  float: left; }
+  #favorite-food a, #calorie-burner a {
+    width: 50%; }
+    #favorite-food a img, #calorie-burner a img {
+      margin-top: 1%;
+      width: 270px; }
+  #favorite-food .content-list, #calorie-burner .content-list {
+    width: 50%;
+    float: left; }
+    #favorite-food .content-list ul li, #calorie-burner .content-list ul li {
+      font-size: 14px; }
+    @media (max-width: 767px) {
+      #favorite-food .content-list, #calorie-burner .content-list {
+        width: 100%;
+        margin-top: 10px; } }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  color: #000;
+  text-align: left;
+  padding: 2%; }
+
+/*# sourceMappingURL=style.css.map */

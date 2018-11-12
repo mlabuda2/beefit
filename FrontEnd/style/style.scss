@@ -1,0 +1,49 @@
+$body-50-width: 50%;
+$body-100-width: 100%;
+$body-defoult-float: left;
+
+.container-fluid{
+  padding: 0 !important;
+}
+.navbar{
+
+}
+#favorite-food{
+  margin: 5%;
+  width: $body-100-width;
+  float: $body-defoult-float;
+  a{
+    width: $body-50-width;
+    img{
+      margin-top: 1%;
+      width: 270px;
+    }
+  }
+  .content-list{
+    width: $body-50-width;
+    float: $body-defoult-float;
+    ul{
+      li{
+        font-size: 14px;
+      }
+    }
+    @media (max-width:767px){
+      width:$body-100-width;
+      margin-top: 10px;
+    }
+  }
+}
+#calorie-burner{
+  @extend #favorite-food;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: $body-100-width;
+  background-color: #f8f9fa;
+  color: #000;
+  text-align: left;
+  padding: 2%;
+}
+
