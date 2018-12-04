@@ -8,6 +8,18 @@ $body-defoult-float: left;
 .navbar{
 
 }
+#start-with-us{
+  min-height: 500px;
+  background: url("/src/img/coffee.jpg") no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+}
+#start-with-us{
+  h1{
+    color: #f8f9fa;
+    padding-top: 10%;
+  }
+}
 #favorite-food{
   margin: 5%;
   width: $body-100-width;
