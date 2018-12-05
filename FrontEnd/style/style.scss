@@ -9,44 +9,28 @@ $body-defoult-float: left;
 
 }
 #start-with-us{
+  margin-top: -8px;
   min-height: 500px;
   background: url("/src/img/coffee.jpg") no-repeat;
   background-size: 100% 100%;
   text-align: center;
-}
-#start-with-us{
   h1{
     color: #f8f9fa;
-    padding-top: 10%;
+    padding-top: 15%;
   }
 }
 #favorite-food{
-  margin: 5%;
-  width: $body-100-width;
-  float: $body-defoult-float;
-  a{
-    width: $body-50-width;
-    img{
-      margin-top: 1%;
-      width: 270px;
-    }
-  }
-  .content-list{
-    width: $body-50-width;
-    float: $body-defoult-float;
-    ul{
-      li{
-        font-size: 14px;
-      }
-    }
-    @media (max-width:767px){
-      width:$body-100-width;
-      margin-top: 10px;
-    }
+  @extend #start-with-us;
+  background: url("/src/img/food2.jpg");
+  background-size: 100% 100%;
+  h1{
+    color: #000;
   }
 }
 #calorie-burner{
-  @extend #favorite-food;
+  @extend #start-with-us;
+  background: url("/src/img/lift.jpg");
+  background-size: 100% 100%;
 }
 .footer {
   position: fixed;

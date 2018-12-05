@@ -1,34 +1,25 @@
 .container-fluid {
   padding: 0 !important; }
 
-#start-with-us {
+#start-with-us, #favorite-food, #calorie-burner {
+  margin-top: -8px;
   min-height: 500px;
   background: url("/src/img/coffee.jpg") no-repeat;
   background-size: 100% 100%;
   text-align: center; }
+  #start-with-us h1, #favorite-food h1, #calorie-burner h1 {
+    color: #f8f9fa;
+    padding-top: 15%; }
 
-#start-with-us h1 {
-  color: #f8f9fa;
-  padding-top: 10%; }
+#favorite-food {
+  background: url("/src/img/food2.jpg");
+  background-size: 100% 100%; }
+  #favorite-food h1 {
+    color: #000; }
 
-#favorite-food, #calorie-burner {
-  margin: 5%;
-  width: 100%;
-  float: left; }
-  #favorite-food a, #calorie-burner a {
-    width: 50%; }
-    #favorite-food a img, #calorie-burner a img {
-      margin-top: 1%;
-      width: 270px; }
-  #favorite-food .content-list, #calorie-burner .content-list {
-    width: 50%;
-    float: left; }
-    #favorite-food .content-list ul li, #calorie-burner .content-list ul li {
-      font-size: 14px; }
-    @media (max-width: 767px) {
-      #favorite-food .content-list, #calorie-burner .content-list {
-        width: 100%;
-        margin-top: 10px; } }
+#calorie-burner {
+  background: url("/src/img/lift.jpg");
+  background-size: 100% 100%; }
 
 .footer {
   position: fixed;
