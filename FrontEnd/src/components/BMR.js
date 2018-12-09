@@ -2,6 +2,44 @@ import  React from 'react';
 import {Component} from 'react';
 
 export default class BMR extends Component{
+      constructor(props) {
+          super(props);
+          this.state = {bmr: ''};
+
+          this.handleGenderChange = this.handleGenderChange.bind(this);
+          this.handleAgeChanged = this.handleAgeChanged.bind(this);
+          this.handleHeightChanged = this.handleHeightChanged.bind(this);
+          this.handleWeightChanged= this.handleWeightChanged.bind(this);
+      }
+    handleGenderChange = (event) => {
+        this.setState({Gender: event.target.value});
+    }
+
+    handleAgeChanged = (event) => {
+        this.setState({Age: event.target.value});
+    }
+
+    handleHeightChanged = (event) => {
+        this.setState({Height: event.target.value});
+    }
+
+    handleWeightChanged = (event) => {
+        this.setState({Weight: event.target.value});
+    }
+
+    onClick = (event) => {
+      event.preventDefault();
+
+      let BMR;
+
+      if (this.state.Gender === 'Male') {
+        BMR = 66 + (13.7 * Number(this.state.Weight)) + (5 * this.state.Height) - (6.76 * Number(this.state.Age));
+        this.setState({ bmr: BMR });
+      } else if (this.state.Gender === 'Female') {
+        BMR = 655 + (9.6 * Number(this.state.Weight)) + (1.8 * this.state.Height) - (4.7 * Number(this.state.Age));
+        this.setState({bmr: BMR});
+      }
+  }
     render(){
       return(
         <div id="BMR">
