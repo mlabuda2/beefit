@@ -32,8 +32,8 @@ class LoginUser extends Component {
     return (
       <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
-          label="Login"
-          name="login"
+          label="Username"
+          name="username"
           component={this.renderField}
         />
         <Field
@@ -49,12 +49,12 @@ class LoginUser extends Component {
 
 function validate(values) {
   console.log(values)
-  // console.log(values) -> { login: 'asdf', password: 'asdf' }
+  // console.log(values) -> { username: 'asdf', password: 'asdf' }
   const errors = {};
 
   // Validate the inputs from 'values'
-  if (!values.login) {
-    errors.login = "Enter a login";
+  if (!values.username) {
+    errors.username = "Enter a username";
   }
   if (!values.password) {
     errors.password = "Enter a password";
