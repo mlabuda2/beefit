@@ -29,7 +29,7 @@ class LoginUser extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+      <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
           label="Login"
           name="login"
