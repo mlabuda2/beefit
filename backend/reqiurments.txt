@@ -3,4 +3,4 @@ flask
 flask-sqlalchemy
 flask-marshmallow
 marshmallow-sqlalchemy
-jwt
+PyJWT
