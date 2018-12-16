@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const LOGIN_USER = "login_user";
+export const REGISTER_USER = "register_user";
 
 const ROOT_URL = "http://127.0.0.1:5000";
 
@@ -15,7 +16,7 @@ export function loginUser(values, callback) {
         mode: 'cors',
         headers: { 'Access-Control-Allow-Origin': true },
         auth: {
-          username: values.login,
+          username: values.username,
           password: values.password
         }
     })
@@ -23,6 +24,17 @@ export function loginUser(values, callback) {
 
   return {
     type: LOGIN_USER,
+    payload: request
+  };
+}
+
+export function registerUser(values, callback) {
+  const request = axios
+  .get(`${ROOT_URL}/register`, values)
+  .then(() => callback());
+
+  return {
+    type: REGISTER_USER,
     payload: request
   };
 }
