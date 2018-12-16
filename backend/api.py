@@ -250,10 +250,30 @@ def login():
     return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
 
+"""Logout user"""
+
+
+@app.route('/logout')
+# @token_required
+def logout(current_user, public_id):
+    
+    user = User.query.filter_by(public_id=public_id).first()
+    
+    if not user:
+        return jsonify({'message': 'No user found!'})
+
+    # user['token'] = None
+
+    # db.session.commit()
+
+    return jsonify({'message': 'The user has been deleted!'})
+    
+
 """Get all food items"""
 
 
 @app.route('/item', methods=['GET'])
+# @token_required
 def get_all_items():
     items = FoodItem.query.all()
     output = []
@@ -276,6 +296,7 @@ def get_all_items():
 
 
 @app.route('/item/<id>', methods=['GET'])
+# @token_required
 def get_one_item(id):
     item = FoodItem.query.filter_by(id=id).first()
 
@@ -297,6 +318,7 @@ def get_one_item(id):
 
 
 @app.route('/item', methods=['POST'])
+# @token_required
 def create_item():
     data = request.get_json()
 
