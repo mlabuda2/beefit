@@ -11,6 +11,7 @@ export default class NavbarMenu extends Component{
               <div>
                 <a className="navbar-brand" href="#">Navbar</a>
                 <a className="navbar-brand" href="/register/">Register</a>
+                <a className="navbar-brand" href="/login/">Login</a>
               </div>
             </nav>
         );
