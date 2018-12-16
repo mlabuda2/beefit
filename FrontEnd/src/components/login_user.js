@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { loginUser } from "../actions";
@@ -64,7 +65,7 @@ function validate(values) {
   return errors;
 }
 
-export default reduxForm({
+export default withRouter(reduxForm({
   validate,
   form: "LoginUserForm"
-})(connect(null, { loginUser })(LoginUser));
+})(connect(null, { loginUser })(LoginUser)));
