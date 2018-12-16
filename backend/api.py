@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, make_response, session
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,6 +10,7 @@ import os
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
+CORS(app)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app.config['SECRET_KEY'] = 'thisissecret'
