@@ -15,8 +15,8 @@ export function loginUser(values, callback) {
         mode: 'cors',
         headers: { 'Access-Control-Allow-Origin': true },
         auth: {
-          username: 'mati',
-          password: 'mati'
+          username: values.login,
+          password: values.password
         }
     })
     .then(() => callback());
