@@ -47,7 +47,12 @@ class RegisterUser extends Component {
           name="password"
           component={this.renderField}
         />
-        <button type="submit" className="btn btn-primary">Log In</button>
+        <Field
+          label="Email"
+          name="email"
+          component={this.renderField}
+        />
+        <button type="submit" className="btn btn-primary">Register your account</button>
       </form>
     );
   }
@@ -59,11 +64,14 @@ function validate(values) {
   const errors = {};
 
   // Validate the inputs from 'values'
-  if (!values.username || (values.username).length >= 3) {
+  if (!values.username || (values.username).length < 3) {
     errors.username = "Enter a username that has at least 3 characters";
   }
-  if (!values.password || (values.password).length >= 8) {
+  if (!values.password || (values.password).length < 8) {
     errors.password = "Enter a password that has at least 8 characters";
+  }
+  if (!values.email) {
+    errors.email = "Enter an email";
   }
 
   // If errors is empty, the form is fine to submit

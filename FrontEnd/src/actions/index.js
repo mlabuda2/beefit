@@ -30,7 +30,7 @@ export function loginUser(values, callback) {
 
 export function registerUser(values, callback) {
   const request = axios
-  .get(`${ROOT_URL}/register`, values)
+  .post(`${ROOT_URL}/register`, values)
   .then(() => callback());
 
   return {
