@@ -19,8 +19,8 @@ class User(db.Model):
     target_weight = db.Column(db.Integer()) #docelowa waga kg
     current_calorie_intake = db.Column(db.Integer()) #obecne spożycie kcal
     diet_calorie_intake = db.Column(db.Integer()) #docelowe spożycie kcal
-    bicek = db.Column(db.String())  # w cm 
-    klata = db.Column(db.String())  # w cm
+    bicek = db.Column(db.Integer())  # w cm 
+    klata = db.Column(db.Integer())  # w cm
 
     def __init__(self, public_id, username, password, email, admin):
         self.public_id = public_id
