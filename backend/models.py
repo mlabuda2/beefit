@@ -29,9 +29,9 @@ class User(db.Model):
         self.password = password
         self.admin = admin
         if username == "matjas":
-            self.bicek = "100" #cm
-            self.klata = "200" #cm
-            self.weight = "150" #kg
+            self.bicek = "30" #cm
+            self.klata = "100" #cm
+            self.weight = "70" #kg
 
 class UserSchema(ma.Schema):
     class Meta:
