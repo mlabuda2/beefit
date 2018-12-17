@@ -14,6 +14,13 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(80))
     admin = db.Column(db.Boolean)
+    stature = db.Column(db.Integer(3)) #wzrost cm
+    current_weight = db.Column(db.Integer(3)) #obecna waga kg
+    target_weight = db.Column(db.Integer(3)) #docelowa waga kg
+    current_calorie_intake = db.Column(db.Integer(4)) #obecne spożycie kcal
+    diet_calorie_intake = db.Column(db.Integer(4)) #docelowe spożycie kcal
+    bicek = db.Column(db.String(2))  # w cm 
+    klata = db.Column(db.String(3))  # w cm
 
     def __init__(self, public_id, username, password, email, admin):
         self.public_id = public_id
@@ -21,8 +28,11 @@ class User(db.Model):
         self.email = email
         self.password = password
         self.admin = admin
-
-
+        if username == "matjas":
+            self.bicek = "100" #cm
+            self.klata = "200" #cm
+            self.weight = "150" #kg
+            
 class UserSchema(ma.Schema):
     class Meta:
         # Fields to expose
