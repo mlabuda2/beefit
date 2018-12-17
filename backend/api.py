@@ -98,8 +98,6 @@ def token_required(f):
 
 
 """Get all users"""
-
-
 @app.route('/user', methods=['GET'])
 @token_required
 def get_all_users(current_user):
@@ -121,8 +119,6 @@ def get_all_users(current_user):
 
 
 """Get one user by public_id"""
-
-
 @app.route('/user/<public_id>', methods=['GET'])
 @token_required
 def get_one_user(current_user, public_id):
@@ -144,8 +140,6 @@ def get_one_user(current_user, public_id):
 
 
 """Create user by admin"""
-
-
 @app.route('/user', methods=['POST'])
 # @token_required
 # def create_user(current_user):
@@ -166,8 +160,6 @@ def create_user():
 
 
 """Register user"""
-
-
 @app.route('/register', methods=['POST'])
 def new_user():
     data = request.get_json()
@@ -186,8 +178,6 @@ def new_user():
 
 
 """Promote user to admin"""
-
-
 @app.route('/user/<public_id>', methods=['PUT'])
 @token_required
 def promote_user(current_user, public_id):
@@ -206,8 +196,6 @@ def promote_user(current_user, public_id):
 
 
 """Delete user"""
-
-
 @app.route('/user/<public_id>', methods=['DELETE'])
 @token_required
 def delete_user(current_user, public_id):
@@ -226,8 +214,6 @@ def delete_user(current_user, public_id):
 
 
 """Login user"""
-
-
 @app.route('/login')
 def login():
     auth = request.authorization
@@ -250,28 +236,7 @@ def login():
     return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
 
-"""Logout user"""
-
-
-@app.route('/logout')
-# @token_required
-def logout(current_user, public_id):
-    
-    user = User.query.filter_by(public_id=public_id).first()
-    
-    if not user:
-        return jsonify({'message': 'No user found!'})
-
-    # user['token'] = None
-
-    # db.session.commit()
-
-    return jsonify({'message': 'The user has been deleted!'})
-    
-
 """Get all food items"""
-
-
 @app.route('/item', methods=['GET'])
 # @token_required
 def get_all_items():
@@ -293,8 +258,6 @@ def get_all_items():
 
 
 """Get one item by id"""
-
-
 @app.route('/item/<id>', methods=['GET'])
 # @token_required
 def get_one_item(id):
@@ -315,8 +278,6 @@ def get_one_item(id):
 
 
 """Create item"""
-
-
 @app.route('/item', methods=['POST'])
 # @token_required
 def create_item():
