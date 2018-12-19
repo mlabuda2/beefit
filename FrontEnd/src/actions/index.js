@@ -20,7 +20,7 @@ export function loginUser(values, callback) {
           password: values.password
         }
     })
-    .then(() => callback());
+    .then((response) => callback(response));
 
   return {
     type: LOGIN_USER,
@@ -37,4 +37,22 @@ export function registerUser(values, callback) {
     type: REGISTER_USER,
     payload: request
   };
+}
+
+export function isAuthenticated() {
+  token = localStorage.getItem('t8k3n')
+  if (token) {
+    const request = axios
+      .get(`${ROOT_URL}/is_auth`, {
+          method: 'GET',
+          mode: 'cors',
+          headers: { 'x-access-token': token },
+      })
+      .then((response) => callback(response));
+
+    return {
+      type: LOGIN_USER,
+      payload: request
+    };
+  }
 }
