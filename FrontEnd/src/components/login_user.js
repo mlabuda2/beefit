@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { loginUser } from "../actions";
+import { loginUser, isAuthenticated } from "../actions";
 
 class LoginUser extends Component {
+  componentDidMount() {
+    this.props.isAuthenticated();
+  }
+
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
@@ -21,8 +25,10 @@ class LoginUser extends Component {
   }
 
   onSubmit(values) {
-    this.props.loginUser(values, () => {
-      this.props.history.push("/");
+    this.props.loginUser(values, (response) => {
+      // console.log(response.data['token']);
+      // this.props.history.push("/");
+      localStorage.setItem('t8k3n', response.data['token']);
     });
   }
 
@@ -68,4 +74,4 @@ function validate(values) {
 export default withRouter(reduxForm({
   validate,
   form: "LoginUserForm"
-})(connect(null, { loginUser })(LoginUser)));
+})(connect(null, { loginUser, isAuthenticated })(LoginUser)));
