@@ -22,16 +22,19 @@ class User(db.Model):
     bicek = db.Column(db.Integer())  # w cm 
     klata = db.Column(db.Integer())  # w cm
 
-    def __init__(self, public_id, username, password, email, admin):
-        self.public_id = public_id
-        self.username = username
-        self.email = email
-        self.password = password
-        self.admin = admin
-        if username == "matjas":
-            self.bicek = "30" #cm
-            self.klata = "100" #cm
-            self.weight = "70" #kg
+    def __repr__(self):
+        return '<User:{}>'.format(self.username)
+
+    # def __init__(self, public_id, username, password, email, admin):
+    #     self.public_id = public_id
+    #     self.username = username
+    #     self.email = email
+    #     self.password = password
+    #     self.admin = admin
+    #     if username == "matjas":
+    #         self.bicek = "30" #cm
+    #         self.klata = "100" #cm
+    #         self.weight = "70" #kg
 
 class UserSchema(ma.Schema):
     class Meta:
@@ -53,13 +56,15 @@ class FoodItem(db.Model):
     fat = db.Column(db.Float)
     carbs = db.Column(db.Float)
 
-    def __init__(self, name, calories, protein, fat, carbs):
-        self.name = name
-        self.calories = calories
-        self.protein = protein
-        self.fat = fat
-        self.carbs = carbs
-
+    # def __init__(self, name, calories, protein, fat, carbs):
+    #     self.name = name
+    #     self.calories = calories
+    #     self.protein = protein
+    #     self.fat = fat
+    #     self.carbs = carbs
+    
+    def __repr__(self):
+        return '<FoodItem:{}>'.format(self.name)
 
 class FoodItemSchema(ma.Schema):
     class Meta:

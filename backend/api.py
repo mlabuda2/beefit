@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, make_response, session
 from flask_cors import CORS
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
@@ -11,13 +11,13 @@ import os
 from models import db, User, FoodItem
 
 app = Flask(__name__)
-db.init_app(app)
-CORS(app)
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 app.config['SECRET_KEY'] = 'thisissecret'
+basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
 
+app.app_context().push()
+db.init_app(app)
+CORS(app)
 
 def token_required(f):
     @wraps(f)
@@ -111,7 +111,7 @@ def new_user():
     if not user:
         hashed_password = generate_password_hash(data['password'], method='sha256')
         new_user = User(public_id=str(uuid.uuid4()), username=data['username'], password=hashed_password,
-                        email=data['email'], admin=False)
+                        email=data['email'], admin=True)
 
         db.session.add(new_user)
         db.session.commit()
