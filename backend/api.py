@@ -55,8 +55,16 @@ def get_all_users(current_user):
         user_data = {}
         user_data['public_id'] = user.public_id
         user_data['username'] = user.username
-        user_data['password'] = user.password
+        # user_data['password'] = user.password
         user_data['admin'] = user.admin
+        user_data['stature'] = user.stature
+        user_data['current_weight'] = user.current_weight
+        user_data['target_weight'] = user.target_weight
+        user_data['current_calorie_intake'] = user.current_calorie_intake
+        user_data['diet_calorie_intake'] = user.diet_calorie_intake
+        user_data['bicek'] = user.bicek
+        user_data['klata'] = user.klata
+
         output.append(user_data)
 
     return jsonify({'users': output})
