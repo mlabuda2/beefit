@@ -1,11 +1,8 @@
 
 ### PIERWSZE URUCHAMIANIE:
 ```
-1.'python3.6'
-2.>>'from api import db'
-3.>>'db.create_all()'
-4.>>'exit()'
-5.'python3.6 api.py'
+1.rm db.sqlite
+2. python create.py
 ```
 ### KOLEJNE URUCHAMIANIA:
 ```
