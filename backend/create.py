@@ -20,7 +20,8 @@ mati = User(public_id = "0",
     )
 
 plan = DietPlan(
-    id = 1
+    id = 1,
+    name = "PLAN DZIKA"
 )
 
 db.session.add(mati)
