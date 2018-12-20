@@ -39,8 +39,8 @@ export function registerUser(values, callback) {
   };
 }
 
-export function isAuthenticated() {
-  token = localStorage.getItem('t8k3n')
+export function isAuthenticated(callback) {
+  let token = localStorage.getItem('t8k3n')
   if (token) {
     const request = axios
       .get(`${ROOT_URL}/is_auth`, {

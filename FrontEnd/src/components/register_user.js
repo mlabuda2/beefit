@@ -1,9 +1,3 @@
-// import  React from 'react';
-//
-// export default function RegisterUser() {
-//   return <h1>Cooming soon...</h1>;
-// }
-
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
@@ -60,7 +54,7 @@ class RegisterUser extends Component {
 
 function validate(values) {
   console.log(values)
-  // console.log(values) -> { username: 'asdf', password: 'asdf' }
+  // console.log(values) -> { username: 'asdf', password: 'asdf', email: 'asdf' }
   const errors = {};
 
   // Validate the inputs from 'values'
