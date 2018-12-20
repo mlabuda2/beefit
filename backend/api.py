@@ -8,7 +8,7 @@ import datetime
 from functools import wraps
 import os
 # from flask_marshmallow import Marshmallow
-from models import db, User, FoodItem, DietPlan
+from models import db, User, FoodItem, DietPlan, DietPlanUser
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisissecret'
@@ -246,22 +246,27 @@ def create_item():
     return jsonify({'message': 'New item added!'})
 
 
-"""Get user's diet plan"""
+"""Get all user's diet plans"""
 @app.route('/user_plan', methods=['GET'])
 @token_required
 def get_user_plan(current_user):
     output = []
 
-    plans = DietPlan.query.filter_by(id=current_user.diet_plan).all()
+    user_plans = (db.session.query(DietPlan,DietPlanUser)
+        .filter(current_user.id == DietPlanUser.user_id)
+        .filter(DietPlan.id == DietPlanUser.diet_plan_id)
+        .all())
 
-    for plan in plans:
-        plan_data = {}
-        plan_data['id'] = plan.id
-        plan_data['name'] = plan.name
+    print(user_plans)
 
-        output.append(plan_data)
+    for el in user_plans:
+        data = {}
+        data['username'] = current_user.username
+        data['name'] = el.DietPlan.name
 
-    return jsonify({'plans': output})
+        output.append(data)
+
+    return jsonify({'data': output})
 
 if __name__ == '__main__':
     app.run(debug=True)

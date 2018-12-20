@@ -24,22 +24,10 @@ class User(db.Model):
     diet_calorie_intake = Column(Integer()) #docelowe spożycie kcal
     bicek = Column(Integer())  # w cm 
     klata = Column(Integer())  # w cm
-    diet_plan = Column(Integer, ForeignKey('diet_plan.id'))
-    diet_plans = relationship("DietPlan")
 
     def __repr__(self):
         return '<User:{}>'.format(self.username)
 
-    # def __init__(self, public_id, username, password, email, admin):
-    #     self.public_id = public_id
-    #     self.username = username
-    #     self.email = email
-    #     self.password = password
-    #     self.admin = admin
-    #     if username == "matjas":
-    #         self.bicek = "30" #cm
-    #         self.klata = "100" #cm
-    #         self.weight = "70" #kg
 
 class UserSchema(ma.Schema):
     class Meta:
@@ -51,6 +39,26 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 
+class DietPlanUser(db.Model):
+    __tablename__ = "diet_plan_user"
+    """ Create many to many relationship User<->DietPlan table"""
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    diet_plan_id = Column(Integer, ForeignKey('diet_plan.id'))
+
+    def __repr__(self):
+        return '<DietPlanUser:User_id {} has {} diet_plan_id>'.format(self.user_id, self.diet_plan_id)
+
+class DietPlan(db.Model):
+    __tablename__ = "diet_plan"
+    """ Create DietPlan table"""
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50))
+
+    def __repr__(self):
+        return '<DietPlan:{}>'.format(self.name)
+
+
 class FoodItem(db.Model):
     __tablename__ = "food_item"
     """ Create FoodItem table"""
@@ -60,13 +68,6 @@ class FoodItem(db.Model):
     protein = Column(Float)
     fat = Column(Float)
     carbs = Column(Float)
-
-    # def __init__(self, name, calories, protein, fat, carbs):
-    #     self.name = name
-    #     self.calories = calories
-    #     self.protein = protein
-    #     self.fat = fat
-    #     self.carbs = carbs
     
     def __repr__(self):
         return '<FoodItem:{}>'.format(self.name)
@@ -80,9 +81,9 @@ class FoodItemSchema(ma.Schema):
 fooditem_schema = FoodItemSchema()
 fooditems_schema = FoodItemSchema(many=True)
 
-class DietPlan(db.Model):
-    __tablename__ = "diet_plan"
-    """ Create DietPlan table"""
+class FoodBlacklist(db.Model):
+    __tablename__ = "food_black_list"
+    """ Create FoodBlacklist table"""
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
     # user_id = Column(Integer, ForeignKey('user.id'))
