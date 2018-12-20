@@ -8,8 +8,12 @@ class LoginUser extends Component {
   componentDidMount() {
     this.props.isAuthenticated((response) => {
       console.log(response.data['message']);
-    });
+      this.props.history.push("/home");
+    }, (error) => console.log(error.response.data['message']))
   }
+  // componentDidMount() {
+  //   this.props.isAuthenticated()
+  // }
 
   renderField(field) {
     const { meta: { touched, error } } = field;
@@ -29,8 +33,8 @@ class LoginUser extends Component {
   onSubmit(values) {
     this.props.loginUser(values, (response) => {
       // console.log(response.data['token']);
-      // this.props.history.push("/");
       localStorage.setItem('t8k3n', response.data['token']);
+      this.props.history.push("/");
     });
   }
 
