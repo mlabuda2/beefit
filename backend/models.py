@@ -87,3 +87,6 @@ class DietPlan(db.Model):
     name = Column(String(50))
     # user_id = Column(Integer, ForeignKey('user.id'))
     # total_calories = Column(Integer)
+
+    def __repr__(self):
+        return '<DietPlan:{}>'.format(self.name)
