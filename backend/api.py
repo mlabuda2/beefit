@@ -41,6 +41,13 @@ def token_required(f):
     return decorated
 
 
+"""Is authenticated"""
+@app.route('/is_auth', methods=['GET'])
+@token_required
+def is_authenticated(current_user):
+    return jsonify({'message': 'OK'})
+
+
 """Get all users"""
 @app.route('/user', methods=['GET'])
 @token_required
