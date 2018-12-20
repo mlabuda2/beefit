@@ -6,7 +6,9 @@ import { loginUser, isAuthenticated } from "../actions";
 
 class LoginUser extends Component {
   componentDidMount() {
-    this.props.isAuthenticated();
+    this.props.isAuthenticated((response) => {
+      console.log(response.data['message']);
+    });
   }
 
   renderField(field) {
