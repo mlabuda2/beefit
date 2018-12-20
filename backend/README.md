@@ -1,8 +1,7 @@
 
 ### PIERWSZE URUCHAMIANIE:
 ```
-1.rm db.sqlite
-2. python create.py
+1. python create.py
 ```
 ### KOLEJNE URUCHAMIANIA:
 ```

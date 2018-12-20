@@ -1,4 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Table, Column, Integer, Float, String, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
+# from sqlalchemy.ext.declarative import declarative_base
 from flask_marshmallow import Marshmallow
 import os
 
@@ -6,21 +9,23 @@ db = SQLAlchemy()
 ma = Marshmallow()
 
 class User(db.Model):
-    __tablename__ = "users"
+    __tablename__ = "user"
     """ Create user table"""
-    id = db.Column(db.Integer, primary_key=True)
-    public_id = db.Column(db.String(50), unique=True)
-    username = db.Column(db.String(50), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(80))
-    admin = db.Column(db.Boolean)
-    stature = db.Column(db.Integer()) #wzrost cm
-    current_weight = db.Column(db.Integer()) #obecna waga kg
-    target_weight = db.Column(db.Integer()) #docelowa waga kg
-    current_calorie_intake = db.Column(db.Integer()) #obecne spożycie kcal
-    diet_calorie_intake = db.Column(db.Integer()) #docelowe spożycie kcal
-    bicek = db.Column(db.Integer())  # w cm 
-    klata = db.Column(db.Integer())  # w cm
+    id = Column(Integer, primary_key=True)
+    public_id = Column(String(50), unique=True)
+    username = Column(String(50), unique=True)
+    email = Column(String(120), unique=True)
+    password = Column(String(80))
+    admin = Column(Boolean)
+    stature = Column(Integer()) #wzrost cm
+    current_weight = Column(Integer()) #obecna waga kg
+    target_weight = Column(Integer()) #docelowa waga kg
+    current_calorie_intake = Column(Integer()) #obecne spożycie kcal
+    diet_calorie_intake = Column(Integer()) #docelowe spożycie kcal
+    bicek = Column(Integer())  # w cm 
+    klata = Column(Integer())  # w cm
+    diet_plan = Column(Integer, ForeignKey('diet_plan.id'))
+    diet_plans = relationship("DietPlan")
 
     def __repr__(self):
         return '<User:{}>'.format(self.username)
@@ -47,14 +52,14 @@ users_schema = UserSchema(many=True)
 
 
 class FoodItem(db.Model):
-    __tablename__ = "food_items"
-    """ Create user table"""
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True)
-    calories = db.Column(db.Integer)
-    protein = db.Column(db.Float)
-    fat = db.Column(db.Float)
-    carbs = db.Column(db.Float)
+    __tablename__ = "food_item"
+    """ Create FoodItem table"""
+    id = Column(Integer, primary_key=True)
+    name = Column(String(120), unique=True)
+    calories = Column(Integer)
+    protein = Column(Float)
+    fat = Column(Float)
+    carbs = Column(Float)
 
     # def __init__(self, name, calories, protein, fat, carbs):
     #     self.name = name
@@ -74,3 +79,14 @@ class FoodItemSchema(ma.Schema):
 
 fooditem_schema = FoodItemSchema()
 fooditems_schema = FoodItemSchema(many=True)
+
+class DietPlan(db.Model):
+    __tablename__ = "diet_plan"
+    """ Create DietPlan table"""
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50))
+    # user_id = Column(Integer, ForeignKey('user.id'))
+    # total_calories = Column(Integer)
+
+    def __repr__(self):
+        return '<DietPlan:{}>'.format(self.name)
