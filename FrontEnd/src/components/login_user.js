@@ -34,7 +34,7 @@ class LoginUser extends Component {
     this.props.loginUser(values, (response) => {
       // console.log(response.data['token']);
       localStorage.setItem('t8k3n', response.data['token']);
-      this.props.history.push("/");
+      this.props.history.push("/home");
     });
   }
 
@@ -60,7 +60,6 @@ class LoginUser extends Component {
 }
 
 function validate(values) {
-  console.log(values)
   // console.log(values) -> { username: 'asdf', password: 'asdf' }
   const errors = {};
 
