@@ -59,6 +59,17 @@ class DietPlan(db.Model):
         return '<DietPlan:{}>'.format(self.name)
 
 
+class DietPlanFoodItem(db.Model):
+    __tablename__ = "diet_plan_food_item"
+    """ Create many to many relationship FoodItem<->DietPlan table"""
+    id = Column(Integer, primary_key=True)
+    food_item_id = Column(Integer, ForeignKey('food_item.id'))
+    diet_plan_id = Column(Integer, ForeignKey('diet_plan.id'))
+
+    def __repr__(self):
+        return '<DietPlanUser:DietPlan_id {} has {} food_item_id>'.format(self.diet_plan_id, self.food_item_id)
+
+
 class FoodItem(db.Model):
     __tablename__ = "food_item"
     """ Create FoodItem table"""

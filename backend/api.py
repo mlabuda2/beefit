@@ -8,7 +8,7 @@ import datetime
 from functools import wraps
 import os
 # from flask_marshmallow import Marshmallow
-from models import db, User, FoodItem, DietPlan, DietPlanUser
+from models import db, User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisissecret'
@@ -33,12 +33,21 @@ def token_required(f):
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             current_user = User.query.filter_by(public_id=data['public_id']).first()
-        except:
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired!'}), 401
+        except:    
             return jsonify({'message': 'Token is invalid!'}), 401
 
         return f(current_user, *args, **kwargs)
 
     return decorated
+
+
+# """Refresh token"""
+# @app.route('/refresh', methods=['GET'])
+# @token_required
+# def is_authenticated(current_user):
+#     return jsonify({'message': 'OK'})
 
 
 """Is authenticated"""
@@ -188,7 +197,7 @@ def login():
 
     if check_password_hash(user.password, auth.password):
         token = jwt.encode(
-            {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
             app.config['SECRET_KEY'])
 
         return jsonify({'token': token.decode('UTF-8')})
@@ -259,21 +268,34 @@ def create_item():
 def get_user_plan(current_user):
     output = []
 
-    user_plans = (db.session.query(DietPlan,DietPlanUser)
+
+    user_plans = (db.session.query(DietPlan,DietPlanUser.user_id, DietPlanUser.diet_plan_id)
         .filter(current_user.id == DietPlanUser.user_id)
-        .filter(DietPlan.id == DietPlanUser.diet_plan_id)
+        .filter(DietPlanUser.diet_plan_id == DietPlan.id)
         .all())
 
-    print(user_plans)
+    print("MY PLANS: ",user_plans)
+
+    # output.append({'username': current_user.username})
 
     for el in user_plans:
         data = {}
         data['username'] = current_user.username
         data['name'] = el.DietPlan.name
+        data['id_plan'] = el.DietPlan.id
 
+        diet_plan_items = (db.session.query(DietPlanFoodItem,FoodItem)
+            .filter(DietPlanFoodItem.diet_plan_id == el.DietPlan.id)
+            .filter(DietPlanFoodItem.food_item_id == FoodItem.id)
+            .all())
+
+        data["items"] = []
+        for item in diet_plan_items:
+            print("ITEM: ", item)
+            data["items"].append(item.FoodItem.name)
         output.append(data)
 
-    return jsonify({'data': output})
+    return jsonify({'my_diet_plans': output})
 
 if __name__ == '__main__':
     app.run(debug=True)
