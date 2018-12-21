@@ -39,20 +39,23 @@ export function registerUser(values, callback) {
   };
 }
 
-export function isAuthenticated(callback) {
+export function isAuthenticated(success_callback, error_callback) {
   let token = localStorage.getItem('t8k3n')
-  if (token) {
-    const request = axios
-      .get(`${ROOT_URL}/is_auth`, {
-          method: 'GET',
-          mode: 'cors',
-          headers: { 'x-access-token': token },
-      })
-      .then((response) => callback(response));
-
-    return {
-      type: LOGIN_USER,
-      payload: request
-    };
+  if (!token) {
+    token = "token does not exist";
   }
+  const request = axios
+    .get(`${ROOT_URL}/is_auth`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: { 'x-access-token': token },
+    })
+    .then((response) => success_callback(response))
+    // .then((response) => console.log(response.data['message']))
+    .catch((error) => error_callback(error));
+    // .catch((error) => console.log(error.response.data['message']));
+  return {
+    type: LOGIN_USER,
+    payload: request
+  };
 }

@@ -68,8 +68,6 @@ function validate(values) {
     errors.email = "Enter an email";
   }
 
-  // If errors is empty, the form is fine to submit
-  // If errors has *any* properties, redux form assumes form is invalid
   return errors;
 }
 

@@ -12,13 +12,15 @@ import LoginUser from './components/login_user';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
+
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
   <BrowserRouter>
     <div>
       <Switch>
-        <Route path="/register/" component={RegisterUser} />
-        <Route path="/login/" component={LoginUser} />
+        <Route path="/register" component={RegisterUser} />
+        <Route path="/login" component={LoginUser} />
+        <Route path="/home" component={RegisterUser} />
         <Route path="/" component={App} />
       </Switch>
     </div>
