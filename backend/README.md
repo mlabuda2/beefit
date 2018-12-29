@@ -33,11 +33,6 @@ body: {
 ### ENDPOINT user_plans wyjaśnienie
 ```
 "plan_details": [
-    {
-        "0": {              
-            "8": [          
-
-"plan_details": [
                 {
                     "0": {      # tutaj 0 to dzień tygodnia
                         "8": [  # tutaj 8 to godzina posiłku
