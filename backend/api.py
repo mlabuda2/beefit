@@ -268,7 +268,6 @@ def create_item():
 def get_user_plan(current_user):
     output = []
 
-
     user_plans = (db.session.query(DietPlan,DietPlanUser.user_id, DietPlanUser.diet_plan_id)
         .filter(current_user.id == DietPlanUser.user_id)
         .filter(DietPlanUser.diet_plan_id == DietPlan.id)
@@ -304,8 +303,6 @@ def get_user_plan(current_user):
                                             "weight": item.DietPlanFoodItem.food_item_weight,
                                             "pieces": item.DietPlanFoodItem.food_item_pieces
                                             })
-            # all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_weight)
-            # all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_pieces)
             print("ALL: ", all_days)
 
         data["plan_details"].append(all_days)
@@ -321,9 +318,7 @@ def get_user_plan(current_user):
 def get_all_plans(current_user):
     output = []
 
-
     plans = db.session.query(DietPlan).all()
-
     print("MY PLANS: ", plans)
 
     for plan in plans:
@@ -353,15 +348,13 @@ def get_all_plans(current_user):
                                             "weight": item.DietPlanFoodItem.food_item_weight,
                                             "pieces": item.DietPlanFoodItem.food_item_pieces
                                             })
-            # all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_weight)
-            # all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_pieces)
             print("ALL: ", all_days)
 
         data["plan_details"].append(all_days)
         print("DODAJĘ ALL DO plan_details ")
         output.append(data)
 
-    return jsonify({'my_diet_plans': output})
+    return jsonify({'diet_plans': output})
 
 
 
