@@ -300,9 +300,12 @@ def get_user_plan(current_user):
             if not all_days[weekday].get(hour, ''):
                 all_days[weekday][hour] = []
 
-            all_days[weekday][hour].append(item.FoodItem.name)
-            all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_weight)
-            all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_pieces)
+            all_days[weekday][hour].append({"name": item.FoodItem.name,
+                                            "weight": item.DietPlanFoodItem.food_item_weight,
+                                            "pieces": item.DietPlanFoodItem.food_item_pieces
+                                            })
+            # all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_weight)
+            # all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_pieces)
             print("ALL: ", all_days)
 
         data["plan_details"].append(all_days)
