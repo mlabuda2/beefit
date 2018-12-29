@@ -37,8 +37,8 @@ body: {
         "0": {              # tutaj 0 to dzień tygodnia
             "8": [          # tutaj 8 to godzina posiłku
                 "tuńczyk",
-                100,
-                2
+                100,        # ta wartość to ilość posiłku - gramy/ml
+                2           # ta wartość to ilość posiłku - sztuki         jedno z tego może być Null ale nie musi
             ],
             "16": [
                 "tuńczyk",
