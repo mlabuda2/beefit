@@ -193,7 +193,7 @@ def login():
     user = User.query.filter_by(username=auth.username).first()
 
     if not user:
-        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="User not found!"'})
 
     if check_password_hash(user.password, auth.password):
         token = jwt.encode(
@@ -262,7 +262,7 @@ def create_item():
     return jsonify({'message': 'New item added!'})
 
 
-"""Get all user's diet plans"""
+"""Get user's diet plans"""
 @app.route('/user_plan', methods=['GET'])
 @token_required
 def get_user_plan(current_user):
@@ -276,8 +276,6 @@ def get_user_plan(current_user):
 
     print("MY PLANS: ",user_plans)
 
-    # output.append({'username': current_user.username})
-
     for el in user_plans:
         data = {}
         data['username'] = current_user.username
@@ -289,10 +287,26 @@ def get_user_plan(current_user):
             .filter(DietPlanFoodItem.food_item_id == FoodItem.id)
             .all())
 
-        data["items"] = []
+        data["plan_details"] = []
+        all_days = dict()
         for item in diet_plan_items:
             print("ITEM: ", item)
-            data["items"].append(item.FoodItem.name)
+
+            weekday = item.DietPlanFoodItem.weekday # 0  0 
+            hour = item.DietPlanFoodItem.meal_time #  8  16
+
+            if not all_days.get(weekday, ''):
+                all_days[weekday] = dict() #{ 0: {} }
+            if not all_days[weekday].get(hour, ''):
+                all_days[weekday][hour] = []
+
+            all_days[weekday][hour].append(item.FoodItem.name)
+            all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_weight)
+            all_days[weekday][hour].append(item.DietPlanFoodItem.food_item_pieces)
+            print("ALL: ", all_days)
+
+        data["plan_details"].append(all_days)
+        print("DODAJĘ ALL DO plan_details ")
         output.append(data)
 
     return jsonify({'my_diet_plans': output})

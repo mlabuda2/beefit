@@ -1,6 +1,7 @@
 from api import db
 from models import User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 db.drop_all()
 db.create_all()
@@ -67,13 +68,58 @@ plan2 = DietPlan(
 
 dietPlanFoodItem1 = DietPlanFoodItem(
     diet_plan_id = 0,
-    food_item_id = 0
+    food_item_id = 0,
+    meal_time = 12,
+    weekday = 2,
+    food_item_weight = 200,
+    food_item_pieces = 0.5
 )
 
 dietPlanFoodItem2 = DietPlanFoodItem(
     diet_plan_id = 1,
-    food_item_id = 1
+    food_item_id = 1,
+    meal_time = 8,
+    weekday = 0,
+    food_item_weight = 100,
+    food_item_pieces = 2
 )
+
+dietPlanFoodItem4 = DietPlanFoodItem(
+    diet_plan_id = 1,
+    food_item_id = 1,
+    meal_time = 16,
+    weekday = 0,
+    food_item_weight = 350,
+    food_item_pieces = 5
+)
+
+dietPlanFoodItem5 = DietPlanFoodItem(
+    diet_plan_id = 1,
+    food_item_id = 1,
+    meal_time = 16,
+    weekday = 0,
+    food_item_weight = 300,
+    food_item_pieces = 20
+)
+
+dietPlanFoodItem5 = DietPlanFoodItem(
+    diet_plan_id = 1,
+    food_item_id = 0,
+    meal_time = 16,
+    weekday = 0,
+    food_item_weight = 1100,
+    food_item_pieces = 1
+)
+
+dietPlanFoodItem3 = DietPlanFoodItem(
+    diet_plan_id = 1,
+    food_item_id = 1,
+    meal_time = 10,
+    weekday = 1,
+    food_item_weight = 300,
+    food_item_pieces = 4
+)
+
 
 
 diet_plan_user = DietPlanUser(
@@ -99,6 +145,9 @@ db.session.add(plan)
 db.session.add(plan2)
 db.session.add(dietPlanFoodItem1)
 db.session.add(dietPlanFoodItem2)
+db.session.add(dietPlanFoodItem3)
+db.session.add(dietPlanFoodItem4)
+db.session.add(dietPlanFoodItem5)
 db.session.add(diet_plan_user)
 db.session.add(diet_plan_user_2)
 db.session.add(diet_plan_user_3)

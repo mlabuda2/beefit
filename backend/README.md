@@ -30,3 +30,30 @@ body: {
 "password": "user1"
 }
 ```
+### ENDPOINT user_plans wyjaśnienie
+```
+"plan_details": [
+    {
+        "0": {              # tutaj 0 to dzień tygodnia
+            "8": [          # tutaj 8 to godzina posiłku
+                "tuńczyk",
+                100,
+                2
+            ],
+            "16": [
+                "tuńczyk",
+                350,
+                5,
+                "kurczak",
+                1100,
+                1
+            ]
+        },
+        "1": {
+            "10": [
+                "tuńczyk",
+                300,
+                4
+            ]
+        }
+```
