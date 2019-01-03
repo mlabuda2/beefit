@@ -247,7 +247,7 @@ def get_one_item(id):
 
 
 """Create item"""
-@app.route('/item', methods=['POST'])
+@app.route('/create_item', methods=['POST'])
 # @token_required
 def create_item():
     data = request.get_json()
@@ -310,6 +310,59 @@ def get_user_plan(current_user):
         output.append(data)
 
     return jsonify({'my_diet_plans': output})
+
+"""Create diet plan"""
+@app.route('/create_plan', methods=['POST'])
+@token_required
+def create_plan(current_user):
+    data = request.get_json()
+
+    new_plan = DietPlan(name=data['name'])
+
+    print(new_plan)
+    print(data)
+    db.session.add(new_plan)
+    db.session.commit()
+
+    return jsonify({'message': 'New plan added!'})
+
+
+"""Assign diet plan to user"""
+@app.route('/assign_plan', methods=['POST'])
+@token_required
+def assign_plan(current_user):
+    data = request.get_json()
+
+    assign_plan = DietPlanUser(user_id=data['user_id'], diet_plan_id=data['diet_plan_id'])
+
+    print(assign_plan)
+    print(data)
+    db.session.add(assign_plan)
+    db.session.commit()
+
+    return jsonify({'message': 'Plan assigned!'})
+
+
+"""Assign food_item to diet plan"""
+@app.route('/assign_item', methods=['POST'])
+@token_required
+def assign_item(current_user):
+    data = request.get_json()
+
+    assign_item = DietPlanFoodItem(food_item_id = data['food_item_id'], 
+                                    diet_plan_id = data['diet_plan_id'],
+                                    meal_time = data['meal_time'],
+                                    weekday = data['weekday'],
+                                    food_item_weight = data['food_item_weight'],
+                                    food_item_pieces = data['food_item_pieces']
+                                )
+    print(assign_item)
+    print(data)
+    db.session.add(assign_item)
+    db.session.commit()
+
+    return jsonify({'message': 'Item assigned!'})
+
 
 
 """Get all diet plans"""
