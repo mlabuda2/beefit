@@ -10,6 +10,7 @@ import App from './components/app';
 import RegisterUser from './components/register_user';
 import LoginUser from './components/login_user';
 import Home from './components/home';
+import DietPlan from './components/diet_plan';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -21,6 +22,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/register" component={RegisterUser} />
         <Route exact path="/home" component={Home} />
+        <Route exact path="/home/diet-plans" component={Home} />
         <Route exact path="/" component={App} />
       </Switch>
     </div>
