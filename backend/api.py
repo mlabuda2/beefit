@@ -206,7 +206,7 @@ def login():
 
 
 """Get all food items"""
-@app.route('/item', methods=['GET'])
+@app.route('/items', methods=['GET'])
 @token_required
 def get_all_items(current_user):
     items = FoodItem.query.all()
