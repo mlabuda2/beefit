@@ -8,7 +8,7 @@ import datetime
 from functools import wraps
 import os
 # from flask_marshmallow import Marshmallow
-from models import db, User, FoodItem, DietPlan, DietPlanUser
+from models import db, User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'thisissecret'
@@ -33,12 +33,21 @@ def token_required(f):
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             current_user = User.query.filter_by(public_id=data['public_id']).first()
-        except:
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired!'}), 401
+        except:    
             return jsonify({'message': 'Token is invalid!'}), 401
 
         return f(current_user, *args, **kwargs)
 
     return decorated
+
+
+# """Refresh token"""
+# @app.route('/refresh', methods=['GET'])
+# @token_required
+# def is_authenticated(current_user):
+#     return jsonify({'message': 'OK'})
 
 
 """Is authenticated"""
@@ -184,11 +193,11 @@ def login():
     user = User.query.filter_by(username=auth.username).first()
 
     if not user:
-        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="User not found!"'})
 
     if check_password_hash(user.password, auth.password):
         token = jwt.encode(
-            {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
             app.config['SECRET_KEY'])
 
         return jsonify({'token': token.decode('UTF-8')})
@@ -238,7 +247,7 @@ def get_one_item(id):
 
 
 """Create item"""
-@app.route('/item', methods=['POST'])
+@app.route('/create_item', methods=['POST'])
 # @token_required
 def create_item():
     data = request.get_json()
@@ -253,27 +262,154 @@ def create_item():
     return jsonify({'message': 'New item added!'})
 
 
-"""Get all user's diet plans"""
+"""Get user's diet plans"""
 @app.route('/user_plan', methods=['GET'])
 @token_required
 def get_user_plan(current_user):
     output = []
 
-    user_plans = (db.session.query(DietPlan,DietPlanUser)
+    user_plans = (db.session.query(DietPlan,DietPlanUser.user_id, DietPlanUser.diet_plan_id)
         .filter(current_user.id == DietPlanUser.user_id)
-        .filter(DietPlan.id == DietPlanUser.diet_plan_id)
+        .filter(DietPlanUser.diet_plan_id == DietPlan.id)
         .all())
 
-    print(user_plans)
+    print("MY PLANS: ",user_plans)
 
     for el in user_plans:
         data = {}
         data['username'] = current_user.username
         data['name'] = el.DietPlan.name
+        data['id_plan'] = el.DietPlan.id
 
+        diet_plan_items = (db.session.query(DietPlanFoodItem,FoodItem)
+            .filter(DietPlanFoodItem.diet_plan_id == el.DietPlan.id)
+            .filter(DietPlanFoodItem.food_item_id == FoodItem.id)
+            .all())
+
+        data["plan_details"] = []
+        all_days = dict()
+        for item in diet_plan_items:
+            print("ITEM: ", item)
+
+            weekday = item.DietPlanFoodItem.weekday # 0  0 
+            hour = item.DietPlanFoodItem.meal_time #  8  16
+
+            if not all_days.get(weekday, ''):
+                all_days[weekday] = dict() #{ 0: {} }
+            if not all_days[weekday].get(hour, ''):
+                all_days[weekday][hour] = []
+
+            all_days[weekday][hour].append({"name": item.FoodItem.name,
+                                            "weight": item.DietPlanFoodItem.food_item_weight,
+                                            "pieces": item.DietPlanFoodItem.food_item_pieces
+                                            })
+            print("ALL: ", all_days)
+
+        data["plan_details"].append(all_days)
+        print("DODAJĘ ALL DO plan_details ")
         output.append(data)
 
-    return jsonify({'data': output})
+    return jsonify({'my_diet_plans': output})
+
+"""Create diet plan"""
+@app.route('/create_plan', methods=['POST'])
+@token_required
+def create_plan(current_user):
+    data = request.get_json()
+
+    new_plan = DietPlan(name=data['name'])
+
+    print(new_plan)
+    print(data)
+    db.session.add(new_plan)
+    db.session.commit()
+
+    return jsonify({'message': 'New plan added!'})
+
+
+"""Assign diet plan to user"""
+@app.route('/assign_plan', methods=['POST'])
+@token_required
+def assign_plan(current_user):
+    data = request.get_json()
+
+    assign_plan = DietPlanUser(user_id=data['user_id'], diet_plan_id=data['diet_plan_id'])
+
+    print(assign_plan)
+    print(data)
+    db.session.add(assign_plan)
+    db.session.commit()
+
+    return jsonify({'message': 'Plan assigned!'})
+
+
+"""Assign food_item to diet plan"""
+@app.route('/assign_item', methods=['POST'])
+@token_required
+def assign_item(current_user):
+    data = request.get_json()
+
+    assign_item = DietPlanFoodItem(food_item_id = data['food_item_id'], 
+                                    diet_plan_id = data['diet_plan_id'],
+                                    meal_time = data['meal_time'],
+                                    weekday = data['weekday'],
+                                    food_item_weight = data['food_item_weight'],
+                                    food_item_pieces = data['food_item_pieces']
+                                )
+    print(assign_item)
+    print(data)
+    db.session.add(assign_item)
+    db.session.commit()
+
+    return jsonify({'message': 'Item assigned!'})
+
+
+
+"""Get all diet plans"""
+@app.route('/all_plans', methods=['GET'])
+@token_required
+def get_all_plans(current_user):
+    output = []
+
+    plans = db.session.query(DietPlan).all()
+    print("MY PLANS: ", plans)
+
+    for plan in plans:
+        data = {}
+        data['name'] = plan.name
+        data['id_plan'] = plan.id
+
+        diet_plan_items = (db.session.query(DietPlanFoodItem,FoodItem)
+            .filter(DietPlanFoodItem.diet_plan_id == plan.id)
+            .filter(DietPlanFoodItem.food_item_id == FoodItem.id)
+            .all())
+
+        data["plan_details"] = []
+        all_days = dict()
+        for item in diet_plan_items:
+            print("ITEM: ", item)
+
+            weekday = item.DietPlanFoodItem.weekday # 0  0 
+            hour = item.DietPlanFoodItem.meal_time #  8  16
+
+            if not all_days.get(weekday, ''):
+                all_days[weekday] = dict() #{ 0: {} }
+            if not all_days[weekday].get(hour, ''):
+                all_days[weekday][hour] = []
+
+            all_days[weekday][hour].append({"name": item.FoodItem.name,
+                                            "weight": item.DietPlanFoodItem.food_item_weight,
+                                            "pieces": item.DietPlanFoodItem.food_item_pieces
+                                            })
+            print("ALL: ", all_days)
+
+        data["plan_details"].append(all_days)
+        print("DODAJĘ ALL DO plan_details ")
+        output.append(data)
+
+    return jsonify({'diet_plans': output})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

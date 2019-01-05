@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Table, Column, Integer, Float, String, Boolean, ForeignKey
+from sqlalchemy import Table, Column, Integer, Float, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 # from sqlalchemy.ext.declarative import declarative_base
 from flask_marshmallow import Marshmallow
@@ -57,6 +57,22 @@ class DietPlan(db.Model):
 
     def __repr__(self):
         return '<DietPlan:{}>'.format(self.name)
+
+
+class DietPlanFoodItem(db.Model):
+    __tablename__ = "diet_plan_food_item"
+    """ Create many to many relationship FoodItem<->DietPlan table"""
+    id = Column(Integer, primary_key=True)
+    food_item_id = Column(Integer, ForeignKey('food_item.id'))
+    diet_plan_id = Column(Integer, ForeignKey('diet_plan.id'))
+
+    meal_time = Column(Integer) #kiedy_zjeść(godzina)
+    weekday = Column(Integer) # kiedy_zjeść(dzien tygodnia) 0-6 pon - niedziela
+    food_item_weight = Column(Integer) #ile_zjeść (waga)
+    food_item_pieces = Column(Float) #ile_zjeść (sztuki)
+
+    def __repr__(self):
+        return '<DietPlanFoodItem:DietPlan_id {} has {} food_item_id>'.format(self.diet_plan_id, self.food_item_id)
 
 
 class FoodItem(db.Model):

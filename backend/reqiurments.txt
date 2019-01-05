@@ -5,3 +5,4 @@ flask-marshmallow
 marshmallow-sqlalchemy
 PyJWT
 flask_cors
+Flask-JWT-Extended==3.14.0
