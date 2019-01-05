@@ -5,14 +5,11 @@ import { connect } from "react-redux";
 import { loginUser, isAuthenticated } from "../actions";
 
 class LoginUser extends Component {
-  componentDidMount() {
-    this.props.isAuthenticated((response) => {
-      console.log(response.data['message']);
-      this.props.history.push("/home");
-    }, (error) => console.log(error.response.data['message']))
-  }
   // componentDidMount() {
-  //   this.props.isAuthenticated()
+  //   this.props.isAuthenticated((response) => {
+  //     console.log("Status: " + response.data['message']);
+  //     this.props.history.push("/home");
+  //   }, (error) => console.log("Status: " + error.response.data['message']))
   // }
 
   renderField(field) {
@@ -38,8 +35,16 @@ class LoginUser extends Component {
     });
   }
 
+  checkToken() {
+    let token = localStorage.getItem('t8k3n');
+    if (token) {
+      this.props.history.push("/home");
+    }
+  }
+
   render() {
     const { handleSubmit } = this.props;
+    this.checkToken()
 
     return (
       <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>

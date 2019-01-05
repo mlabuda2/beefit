@@ -40,7 +40,7 @@ export function registerUser(values, callback) {
 }
 
 export function isAuthenticated(success_callback, error_callback) {
-  let token = localStorage.getItem('t8k3n')
+  let token = localStorage.getItem('t8k3n');
   if (!token) {
     token = "token does not exist";
   }

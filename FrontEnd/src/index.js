@@ -9,6 +9,8 @@ import reducers from './reducers';
 import App from './components/app';
 import RegisterUser from './components/register_user';
 import LoginUser from './components/login_user';
+import Home from './components/home';
+import DietPlan from './components/diet_plan';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -19,9 +21,9 @@ ReactDOM.render(
     <div>
       <Switch>
         <Route path="/register" component={RegisterUser} />
-        <Route path="/login" component={LoginUser} />
-        <Route path="/home" component={RegisterUser} />
-        <Route path="/" component={App} />
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/home/diet-plans" component={Home} />
+        <Route exact path="/" component={App} />
       </Switch>
     </div>
   </BrowserRouter>
