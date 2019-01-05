@@ -20,9 +20,8 @@ ReactDOM.render(
     <div>
       <Switch>
         <Route path="/register" component={RegisterUser} />
-        <Route path="/login" component={LoginUser} />
         <Route exact path="/home" component={Home} />
-        <Route path="/" component={App} />
+        <Route exact path="/" component={App} />
       </Switch>
     </div>
   </BrowserRouter>
