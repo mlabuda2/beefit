@@ -35,7 +35,7 @@ def token_required(f):
             current_user = User.query.filter_by(public_id=data['public_id']).first()
         except jwt.ExpiredSignatureError:
             return jsonify({'message': 'Token has expired!'}), 401
-        except:    
+        except:
             return jsonify({'message': 'Token is invalid!'}), 401
 
         return f(current_user, *args, **kwargs)
@@ -263,7 +263,7 @@ def create_item():
 
 
 """Get user's diet plans"""
-@app.route('/user_plan', methods=['GET'])
+@app.route('/user_plans', methods=['GET'])
 @token_required
 def get_user_plan(current_user):
     output = []
@@ -291,7 +291,7 @@ def get_user_plan(current_user):
         for item in diet_plan_items:
             print("ITEM: ", item)
 
-            weekday = item.DietPlanFoodItem.weekday # 0  0 
+            weekday = item.DietPlanFoodItem.weekday # 0  0
             hour = item.DietPlanFoodItem.meal_time #  8  16
 
             if not all_days.get(weekday, ''):
@@ -349,7 +349,7 @@ def assign_plan(current_user):
 def assign_item(current_user):
     data = request.get_json()
 
-    assign_item = DietPlanFoodItem(food_item_id = data['food_item_id'], 
+    assign_item = DietPlanFoodItem(food_item_id = data['food_item_id'],
                                     diet_plan_id = data['diet_plan_id'],
                                     meal_time = data['meal_time'],
                                     weekday = data['weekday'],
@@ -389,7 +389,7 @@ def get_all_plans(current_user):
         for item in diet_plan_items:
             print("ITEM: ", item)
 
-            weekday = item.DietPlanFoodItem.weekday # 0  0 
+            weekday = item.DietPlanFoodItem.weekday # 0  0
             hour = item.DietPlanFoodItem.meal_time #  8  16
 
             if not all_days.get(weekday, ''):
