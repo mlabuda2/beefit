@@ -30,8 +30,13 @@ body: {
 "password": "user1"
 }
 ```
-### ENDPOINT user_plans wyjaśnienie
+### ZWRACA PLANY ZALOGOWANEGO USERA (/user_plans): + wyjaśnienie responsea
 ```
+headers standardowo x-access-token
+metoda: GET
+
+wyjaśnienie responsea: 
+
 "plan_details": [
                 {
                     "0": {      # tutaj 0 to dzień tygodnia
@@ -71,8 +76,6 @@ body: {
 ### TWORZENIE NOWEGO DIET PLANU  (/create_plan):
 ```
 headers standardowo x-access-token
-body:
-{
 metoda: POST
 body: {
 "name": "plan1",
@@ -91,12 +94,20 @@ body: {
 }
 ```
 
+### ZWRACA WSZYSTKIE FOOD ITEMY  (/items):
+```
+headers standardowo x-access-token
+```
+
+### ZWRACA FOOD ITEM BY ID  (/item/<id>):
+```
+headers standardowo x-access-token
+```
+
 
 ### TWORZENIE NOWEGO FOOD ITEMA  (/create_item):
 ```
 headers standardowo x-access-token
-body:
-{
 metoda: POST
 body: {
 "name": "item1",
@@ -110,8 +121,6 @@ body: {
 ### PRZYPISANIE FOOD ITEMA DO DIET PLANU  (/assign_item):
 ```
 headers standardowo x-access-token
-body:
-{
 metoda: POST
 body: {
 "food_item_id": 1, 

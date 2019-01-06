@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import NavbarMenu from "../components/navbar_menu";
-import FavoriteFood from "../components/favorite_food";
+import MainBody from "../components/main_body";
 import FooterMenu from "./footer_menu";
-import CalorieBurner from "./CalorieBurner";
-import StartWithUs from "./start_with_us";
-import BMR from "./BMR";
+
+
 
 
 export default class App extends Component {
@@ -12,10 +11,7 @@ export default class App extends Component {
     return (
       <div>
         <NavbarMenu/>
-        <StartWithUs/>
-        <FavoriteFood/>
-        <CalorieBurner/>
-        <BMR/>
+        <MainBody/>
         <FooterMenu/>
       </div>
     );
