@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LogoutUser from "../components/logout_user";
-import DietPlan from "../components/diet_plan";
 
 export default class NavbarHome extends Component{
 
