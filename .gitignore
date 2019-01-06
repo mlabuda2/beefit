@@ -6,3 +6,5 @@ __pycache__/
 venv/
 db.sqlite
 backend/db.sqlite
+
+.DS_Store
