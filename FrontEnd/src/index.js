@@ -12,7 +12,7 @@ import LoginUser from './components/login_user';
 import Home from './components/home';
 import DietPlanList from './components/diet_plan_list';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 
 ReactDOM.render(
