@@ -41,7 +41,11 @@ export function registerUser(values, callback) {
 }
 
 export function fetchDietPlans() {
-  const request = axios.get(`${ROOT_URL}/user_plans`);
+  let token = localStorage.getItem('t8k3n');
+  const request = axios
+    .get(`${ROOT_URL}/user_plans`, {
+      headers: { 'x-access-token': token },
+    });
 
   return {
     type: FETCH_DIET_PLANS,
