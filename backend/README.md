@@ -134,7 +134,7 @@ body: {
 headers standardowo x-access-token
 ```
 
-### ZWRACA FOOD ITEM BY ID  (/item/<id>):
+### ZWRACA FOOD ITEM BY ID  (/item/id):
 ```
 headers standardowo x-access-token
 ```
