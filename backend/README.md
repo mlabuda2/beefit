@@ -73,6 +73,12 @@ wyjaśnienie responsea:
             ],
 ```
 
+### ZWRACA DIET PLAN BY ID (/plan/<id>):
+```
+headers standardowo x-access-token
+metoda: GET
+```
+
 ### TWORZENIE NOWEGO DIET PLANU  (/create_plan):
 ```
 headers standardowo x-access-token

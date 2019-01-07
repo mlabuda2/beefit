@@ -228,7 +228,7 @@ def get_all_items(current_user):
 
 """Get one item by id"""
 @app.route('/item/<id>', methods=['GET'])
-# @token_required
+@token_required
 def get_one_item(id):
     item = FoodItem.query.filter_by(id=id).first()
 
@@ -439,7 +439,52 @@ def get_all_plans(current_user):
 
     return jsonify({'diet_plans': output})
 
+"""Get user's diet plan by id"""
+@app.route('/plan/<id>', methods=['GET'])
+@token_required
+def get_plan_by_id(current_user, id):
+    output = []
 
+    plan = (db.session.query(DietPlan)
+        .filter(DietPlan.id == id)
+        .first())
+
+    print("PLAN BY ID: ",plan)
+
+    data = {}
+    data['username'] = current_user.username
+    data['name'] = plan.name
+    data['id_plan'] = plan.id
+
+    diet_plan_items = (db.session.query(DietPlanFoodItem,FoodItem)
+        .filter(DietPlanFoodItem.diet_plan_id == plan.id)
+        .filter(DietPlanFoodItem.food_item_id == FoodItem.id)
+        .all())
+
+    data["plan_details"] = []
+    all_days = dict()
+    for item in diet_plan_items:
+        # print("ITEM: ", item)
+
+        weekday = item.DietPlanFoodItem.weekday # 0  0
+        hour = item.DietPlanFoodItem.meal_time #  8  16
+
+        if not all_days.get(weekday, ''):
+            all_days[weekday] = dict() #{ 0: {} }
+        if not all_days[weekday].get(hour, ''):
+            all_days[weekday][hour] = []
+
+        all_days[weekday][hour].append({"name": item.FoodItem.name,
+                                        "weight": item.DietPlanFoodItem.food_item_weight,
+                                        "pieces": item.DietPlanFoodItem.food_item_pieces
+                                        })
+        print("ALL: ", all_days)
+
+    data["plan_details"].append(all_days)
+    # print("DODAJĘ ALL DO plan_details ")
+    output.append(data)
+
+    return jsonify({'my_diet_plans': output})
 
 if __name__ == '__main__':
     app.run(debug=True)
