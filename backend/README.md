@@ -73,7 +73,7 @@ wyjaśnienie responsea:
             ],
 ```
 
-### ZWRACA DIET PLAN BY ID (/plan/<id>):
+### ZWRACA DIET PLAN BY ID (/plan/id):
 ```
 headers standardowo x-access-token
 metoda: GET
