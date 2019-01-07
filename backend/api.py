@@ -197,7 +197,7 @@ def login():
 
     if check_password_hash(user.password, auth.password):
         token = jwt.encode(
-            {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
+            {'public_id': user.public_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=120)},
             app.config['SECRET_KEY'])
 
         return jsonify({'token': token.decode('UTF-8')})
@@ -273,7 +273,7 @@ def get_user_plan(current_user):
         .filter(DietPlanUser.diet_plan_id == DietPlan.id)
         .all())
 
-    print("MY PLANS: ",user_plans)
+    # print("MY PLANS: ",user_plans)
 
     for el in user_plans:
         data = {}
@@ -289,7 +289,7 @@ def get_user_plan(current_user):
         data["plan_details"] = []
         all_days = dict()
         for item in diet_plan_items:
-            print("ITEM: ", item)
+            # print("ITEM: ", item)
 
             weekday = item.DietPlanFoodItem.weekday # 0  0
             hour = item.DietPlanFoodItem.meal_time #  8  16
@@ -306,7 +306,7 @@ def get_user_plan(current_user):
             print("ALL: ", all_days)
 
         data["plan_details"].append(all_days)
-        print("DODAJĘ ALL DO plan_details ")
+        # print("DODAJĘ ALL DO plan_details ")
         output.append(data)
 
     return jsonify({'my_diet_plans': output})
@@ -317,11 +317,37 @@ def get_user_plan(current_user):
 def create_plan(current_user):
     data = request.get_json()
 
-    new_plan = DietPlan(name=data['name'])
+    # jeśli user dodaje swoje itemy - najpierw wrzucam je do (jego profilu?) bazy
+    #TODO model CustomFoodItem n:1 User
+    if data.get('custom_items', ''):
+        for custom_item in data['custom_items']:
+            new_item = FoodItem(name=custom_item['name'], calories=custom_item['calories'],
+                        protein=custom_item['protein'], fat=custom_item['fat'], carbs=custom_item['carbs'])
+        print("New item ADDED: ",new_item)
+        db.session.add(new_item)
 
-    print(new_plan)
-    print(data)
+    # najpierw dodaję plan i przypisuję go do current_usera
+    new_plan = DietPlan(name=data['name'])
     db.session.add(new_plan)
+    db.session.commit()
+    assign_plan = DietPlanUser(user_id=current_user.id, diet_plan_id=new_plan.id)
+
+
+    #dodawanie do planu itemów, z naszej bazy, które podał user
+    if data.get('our_items', ''):
+        for item in data['our_items']:
+            assign_item = DietPlanFoodItem(food_item_id = item['food_item_id'],
+                                            diet_plan_id = new_plan.id,
+                                            meal_time = item['meal_time'],
+                                            weekday = item['weekday'],
+                                            food_item_weight = item['food_item_weight'],
+                                            food_item_pieces = item.get('food_item_pieces', None)
+                                        )
+            db.session.add(assign_item)
+            print(assign_item)
+
+    print("DODAJĘ PLAN: ",new_plan)
+    db.session.add(assign_plan)
     db.session.commit()
 
     return jsonify({'message': 'New plan added!'})
@@ -343,23 +369,27 @@ def assign_plan(current_user):
     return jsonify({'message': 'Plan assigned!'})
 
 
-"""Assign food_item to diet plan"""
-@app.route('/assign_item', methods=['POST'])
+"""Assign food_item/items to diet plan"""
+@app.route('/assign_items', methods=['POST'])
 @token_required
 def assign_item(current_user):
     data = request.get_json()
 
-    assign_item = DietPlanFoodItem(food_item_id = data['food_item_id'],
-                                    diet_plan_id = data['diet_plan_id'],
-                                    meal_time = data['meal_time'],
-                                    weekday = data['weekday'],
-                                    food_item_weight = data['food_item_weight'],
-                                    food_item_pieces = data['food_item_pieces']
-                                )
-    print(assign_item)
-    print(data)
-    db.session.add(assign_item)
+    if data.get('items', ''):
+        for item in data['items']:
+            assign_item = DietPlanFoodItem(food_item_id = item['food_item_id'],
+                                            diet_plan_id = item['diet_item_id'],
+                                            meal_time = item['meal_time'],
+                                            weekday = item['weekday'],
+                                            food_item_weight = item['food_item_weight'],
+                                            food_item_pieces = item.get('food_item_pieces', None)
+                                        )
+            db.session.add(assign_item)
+            print(assign_item)
+
+    print("PRZYPISUJĘ ITEMKI DO PLANU")
     db.session.commit()
+
 
     return jsonify({'message': 'Item assigned!'})
 
