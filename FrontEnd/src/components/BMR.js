@@ -31,6 +31,8 @@ export default class BMR extends Component{
       event.preventDefault();
 
       let BMR;
+      let aktywne;
+      let nieaktywne;
 
       if (this.state.Gender === 'Male') {
         BMR = 66 + (13.7 * Number(this.state.Weight)) + (5 * this.state.Height) - (6.76 * Number(this.state.Age));
@@ -39,6 +41,8 @@ export default class BMR extends Component{
         BMR = 655 + (9.6 * Number(this.state.Weight)) + (1.8 * this.state.Height) - (4.7 * Number(this.state.Age));
         this.setState({bmr: BMR});
       }
+      this.setState({aktywne: BMR * 1.5});
+      this.setState({nieaktywne: BMR * 0.85});
   }
     render(){
       return(
@@ -64,7 +68,7 @@ export default class BMR extends Component{
                                />
                     </div>
                     <div className="form-group">
-                            <label>Wzrost:</label>
+                            <label>Wzrost (w cm):</label>
                             <input className="form-control"
                             onChange={this.handleHeightChanged}
                             type="input"
@@ -75,7 +79,7 @@ export default class BMR extends Component{
                             />
                     </div>
                     <div className="form-group">
-                            <label htmlFor="Weight">Waga:</label>
+                            <label htmlFor="Weight">Waga (w kg):</label>
                                 <input className="form-control"
                                 onChange={this.handleWeightChanged}
                                 type="input"
@@ -85,6 +89,7 @@ export default class BMR extends Component{
                                 value={this.state.Weight}
                                 />
                     </div>
+                    <button className="btn btn-lg btn-primary btn-block" onClick={this.onClick.bind(this)}>Sprawdż swoje BMR</button> <br />
                     <div className="form-group">
                             <label>Twoje BMR:</label>
                                 <input className="form-control"
@@ -93,9 +98,24 @@ export default class BMR extends Component{
                                 value= {this.state.bmr}
                                 />
                     </div>
-                    <button className="btn btn-lg btn-primary btn-block" onClick={this.onClick.bind(this)}>Sprawdż swoje BMR</button> <br />
+                    <div className="form-group">
+                            <label>BMR dla osoby aktywnej:</label>
+                                <input className="form-control"
+                                id="BMR"
+                                name="BMR"
+                                value= {this.state.aktywne}
+                                />
+                    </div>
+                    <div className="form-group">
+                            <label>BMR dla osoby nie aktywnej:</label>
+                                <input className="form-control"
+                                id="BMR"
+                                name="BMR"
+                                value= {this.state.nieaktywne}
+                                />
+                    </div>
                 </form>
-            </div>
+          </div>
         );
     }
   }
