@@ -73,12 +73,47 @@ wyjaśnienie responsea:
             ],
 ```
 
+### ZWRACA DIET PLAN BY ID (/plan/id):
+```
+headers standardowo x-access-token
+metoda: GET
+```
+
 ### TWORZENIE NOWEGO DIET PLANU  (/create_plan):
 ```
 headers standardowo x-access-token
 metoda: POST
 body: {
-"name": "plan1",
+"name": "plan pełny",
+# user podaje itemy które mamy w bazie
+"our_items": [ 
+                {
+                    "food_item_id": 33,
+                    "meal_time": 8,
+                    "weekday": 0,
+                    "food_item_weight": 100
+                },
+                {
+                    "food_item_id": 34,
+                    "meal_time": 12,
+                    "weekday": 0,
+                    "food_item_weight": 200,
+                    "food_item_pieces: 1 #opcjonalnie - nie trzeba podawać
+                }
+            ],
+
+#opcjonalnie - nie trzeba podawać / NIEDOKOŃCZONE narazie dodaje do tabeli głównej(FoodItem) później do CustomFoodItem usera zrobię
+#user może podać itemy których nie mamy w bazie
+
+"custom_items": [   
+                    {
+                    "name": "item4",
+                    "calories": 10,
+                    "protein": 10.6, 
+                    "fat": 10.3, 
+                    "carbs": 10.3
+                    }, ...
+                ]
 }
 ```
 
@@ -99,7 +134,7 @@ body: {
 headers standardowo x-access-token
 ```
 
-### ZWRACA FOOD ITEM BY ID  (/item/<id>):
+### ZWRACA FOOD ITEM BY ID  (/item/id):
 ```
 headers standardowo x-access-token
 ```
@@ -118,20 +153,33 @@ body: {
 }
 ```
 
-### PRZYPISANIE FOOD ITEMA DO DIET PLANU  (/assign_item):
+### PRZYPISANIE FOOD ITEMA/ITEMÓW DO DIET PLANU  (/assign_items):
 ```
 headers standardowo x-access-token
 metoda: POST
 body: {
-"food_item_id": 1, 
-"diet_plan_id": 1,
-"meal_time": 10,
-"weekday": 1,
-"food_item_weight": 100, #ile gram
-"food_item_pieces": 2, #lub ile sztuk np jabłko 2 szt bez podawania wagi lub z wagą
+	items": [
+                {
+                    "food_item_id": 33,
+                    "diet_plan_id": 2,
+                    "meal_time": 8,
+                    "weekday": 0,
+                    "food_item_weight": 100
+                },
+                
+                {
+                    "food_item_id": 34,
+                    "diet_plan_id": 2,
+                    "meal_time": 12,
+                    "weekday": 0,
+                    "food_item_weight": 200 
+                }
+            ] 
 }
 ```
 
-TODO:
--ENDPOINT który tworzy plan i przypisuje od razu itemy w jednym requescie
- np. uzytkownik tworzy nowy plan od razu pełny z itemami itp.
+Do rozważenia:
+-czy w fooditem nie dodać public_id generowane na froncie?
+    korzyści:
+        -można dodać custom item do planu przed dodaniem do bazy, a jeśli go nie ma to trzeba najpierw
+        zacommitować go do bazy i dopiero wtedy tworzy się auto id po którym można dodać do planu item

@@ -43,7 +43,7 @@ wojtek = User(
 
 item1 = FoodItem(
     id = 0,
-    name = "kurczak",
+    name = "kurczakTESTOWY",
     calories = 200,
     protein = 10,
     fat = 1,
@@ -52,7 +52,7 @@ item1 = FoodItem(
 
 item2 = FoodItem(
     id = 1,
-    name = "tuńczyk",
+    name = "tuńczykTESTOWY",
     calories = 150,
     protein = 30,
     fat = 1,
