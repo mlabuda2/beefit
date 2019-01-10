@@ -4,7 +4,8 @@ import {Component} from 'react';
 export default class BMI extends Component{
       constructor(props) {
           super(props);
-          this.state = {bmi: ''};
+          this.state = {bmi: '',
+                        showBMI:false};
 
           this.handleHeightChanged = this.handleHeightChanged.bind(this);
           this.handleWeightChanged= this.handleWeightChanged.bind(this);
@@ -43,9 +44,18 @@ export default class BMI extends Component{
         this.setState({text: text});
       }
   }
+  showBMI(){
+    this.setState({
+      showBMI:!this.state.showBMI
+    })
+  }
     render(){
       return(
         <div id="BMI">
+        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMI()}>Kalkulator BMI</button>
+        {
+          this.state.showBMI?
+          <div>
               <h4>Twój kalkulator BMI</h4>
                     <form>
                     <div className="form-group">
@@ -85,6 +95,9 @@ export default class BMI extends Component{
                                 />
                     </div>
                 </form>
+              </div>
+            :null
+            }
             </div>
         );
     }
