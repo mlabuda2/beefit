@@ -4,7 +4,10 @@ import { FETCH_DIET_PLANS } from "../actions";
 export default function(state = {}, action) {
   switch (action.type) {
     case FETCH_DIET_PLANS:
-      return action.payload.data.my_diet_plans;
+      let dietPlans = _.mapKeys(action.payload.data.my_diet_plans, "id_plan")
+      console.log(dietPlans);
+      // return action.payload.data.my_diet_plans;
+      return dietPlans;
     default:
       return state;
   }
