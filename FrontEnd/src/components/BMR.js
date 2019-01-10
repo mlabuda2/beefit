@@ -4,7 +4,8 @@ import {Component} from 'react';
 export default class BMR extends Component{
       constructor(props) {
           super(props);
-          this.state = {bmr: ''};
+          this.state = {bmr: '',
+                        showBMR:false};
 
           this.handleGenderChange = this.handleGenderChange.bind(this);
           this.handleAgeChanged = this.handleAgeChanged.bind(this);
@@ -44,9 +45,18 @@ export default class BMR extends Component{
       this.setState({aktywne: BMR * 1.5});
       this.setState({nieaktywne: BMR * 0.85});
   }
+  showBMR(){
+    this.setState({
+      showBMR:!this.state.showBMR
+    })
+  }
     render(){
       return(
         <div id="BMR">
+        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR()}>Kalkulator BMR</button>
+        {
+          this.state.showBMR?
+          <div>
               <h4>Twój kalkulator BMR</h4>
                     <form>
                     <div className="form-group">
@@ -115,6 +125,9 @@ export default class BMR extends Component{
                                 />
                     </div>
                 </form>
+              </div>
+            :null
+            }
           </div>
         );
     }
