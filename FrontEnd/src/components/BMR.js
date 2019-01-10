@@ -5,7 +5,7 @@ export default class BMR extends Component{
       constructor(props) {
           super(props);
           this.state = {bmr: '',
-                        showBMR:false};
+                        showBMR2:false};
 
           this.handleGenderChange = this.handleGenderChange.bind(this);
           this.handleAgeChanged = this.handleAgeChanged.bind(this);
@@ -36,28 +36,28 @@ export default class BMR extends Component{
       let nieaktywne;
 
       if (this.state.Gender === 'Male') {
-        BMR = 66 + (13.7 * Number(this.state.Weight)) + (5 * this.state.Height) - (6.76 * Number(this.state.Age));
+        BMR = (9.99 * Number(this.state.Weight)) + (6.25 * this.state.Height) - (4.92 * Number(this.state.Age)) + 5;
         this.setState({ bmr: BMR });
       } else if (this.state.Gender === 'Female') {
-        BMR = 655 + (9.6 * Number(this.state.Weight)) + (1.8 * this.state.Height) - (4.7 * Number(this.state.Age));
+        BMR = (9.99 * Number(this.state.Weight)) + (6.25 * this.state.Height) - (4.92 * Number(this.state.Age)) - 161;
         this.setState({bmr: BMR});
       }
       this.setState({aktywne: BMR * 1.5});
       this.setState({nieaktywne: BMR * 0.85});
   }
-  showBMR(){
+  showBMR2(){
     this.setState({
-      showBMR:!this.state.showBMR
+      showBMR2:!this.state.showBMR2
     })
   }
     render(){
       return(
         <div id="BMR">
-        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR()}>Kalkulator BMR</button>
+        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR2()}>Kalkulator BMR metoda Mifflin-St Jeor</button>
         {
-          this.state.showBMR?
+          this.state.showBMR2?
           <div>
-              <h4>Twój kalkulator BMR</h4>
+              <h4>Twój kalkulator BMR metoda Mifflin-St Jeor</h4>
                     <form>
                     <div className="form-group">
                       <select className="form-control" value={this.state.Gender} onChange={this.handleGenderChange}>
@@ -128,7 +128,7 @@ export default class BMR extends Component{
               </div>
             :null
             }
-          </div>
+            </div>
         );
     }
   }
