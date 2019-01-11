@@ -5,7 +5,7 @@
 ```
 ### KOLEJNE URUCHAMIANIA:
 ```
-1.'python3.6 api.py'
+1.'python manage.py'
 ```
 ### LOGOWANIE ADMIN
 ```
