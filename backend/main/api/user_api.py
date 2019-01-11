@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import db, User
+from ..model.models import db, User
 from flask import Flask, request, jsonify, make_response, session
 from flask_sqlalchemy import SQLAlchemy
 import uuid
@@ -9,8 +9,8 @@ import datetime
 from functools import wraps
 import os
 from flask import current_app as app
+from . import user_api
 
-user_api = Blueprint('user_api', __name__)
 
 def token_required(f):
     @wraps(f)

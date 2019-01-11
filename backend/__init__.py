@@ -1,0 +1,1 @@
+print("ODPALAM BACKEND/__INIT__")
