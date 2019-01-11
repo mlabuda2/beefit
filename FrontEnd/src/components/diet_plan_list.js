@@ -9,19 +9,23 @@ class DietPlanList extends Component {
   }
 
   renderList() {
-    return _.map(this.props.diet_plans, product => {
+    const { diet_plans } = this.props;
+    return _.map(this.props.diet_plans, plan => {
+    // const { diet_plans } = this.props;
+    // return diet_plans.map(plan => {
       return (
-        <li
-          key={product.name}
-          className="list-group-item"
-        >
-          { product.name }
+        <li key={plan.name} className="list-group-item" onClick={() =>
+          this.props.history.push(`/home/diet-plans/${plan.id_plan}`)
+        }>
+          { plan.name }
         </li>
       );
     });
   }
   render() {
-    if (Object.keys(this.props.diet_plans).length == 0) {
+    // if (Object.keys(this.props.diet_plans).length == 0) {
+    const { diet_plans } = this.props;
+    if (diet_plans === null || diet_plans.length == 0) {
       return (
         <div></div>
       );
@@ -29,6 +33,7 @@ class DietPlanList extends Component {
     return (
         <ul className="list-group col-sm-4">
           <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home")}>Back</button>
+            {console.log(diet_plans)}
             {this.renderList()}
         </ul>
     );
@@ -37,7 +42,6 @@ class DietPlanList extends Component {
 
 function mapStateToProps(state) {
   return {
-    products: state.products,
     diet_plans: state.diet_plans
   };
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 export const LOGIN_USER = "login_user";
 export const REGISTER_USER = "register_user";
 export const FETCH_DIET_PLANS = "fetch_diet_plans";
+export const SELECTED_DIET_PLAN = "selected_diet_plan";
 
 const ROOT_URL = "http://127.0.0.1:5000";
 
