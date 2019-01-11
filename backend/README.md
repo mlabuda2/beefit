@@ -5,7 +5,7 @@
 ```
 ### KOLEJNE URUCHAMIANIA:
 ```
-1.'python manage.py'
+1.'python manage.py run'
 ```
 ### LOGOWANIE ADMIN
 ```
