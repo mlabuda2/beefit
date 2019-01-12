@@ -19,7 +19,7 @@ class LoginUser extends Component {
     return (
       <div className={className}>
         <label>{field.label}</label>
-        <input className="form-control" type="text" {...field.input} />
+        <input className="form-control" type={this.type} {...field.input} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
@@ -49,11 +49,13 @@ class LoginUser extends Component {
     return (
       <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
+          type="text"
           label="Username"
           name="username"
           component={this.renderField}
         />
         <Field
+          type="password"
           label="Password"
           name="password"
           component={this.renderField}
