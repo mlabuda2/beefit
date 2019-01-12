@@ -7,6 +7,22 @@
   left: 0;
   width: 100%; }
 
+a {
+ 	display: inline;
+ 	position: relative;
+ 	}
+
+a:hover:after {
+ 	background: rgba(0,0,0,.8);
+ 	border-radius: 7px;
+ 	bottom: 100px;
+ 	color: #fff;
+ 	content: attr(title);
+ 	padding: 5px 55px;
+ 	position: absolute;
+ 	white-space: nowrap;
+ 	}
+
 #start-with-us, #favorite-food, #calorie-burner {
   margin-top: 10px;
   margin-bottom: 10px;
