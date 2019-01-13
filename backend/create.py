@@ -8,9 +8,9 @@ import sqlalchemy
 
 
 print("CREATE DB:", db)
-app = create_app()
+app = create_app('dev')
 db.drop_all()
-db.create_all('dev')
+db.create_all()
 mati = User(
     id = 0,
     public_id = "0",
