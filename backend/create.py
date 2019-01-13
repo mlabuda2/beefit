@@ -10,7 +10,7 @@ import sqlalchemy
 print("CREATE DB:", db)
 app = create_app()
 db.drop_all()
-db.create_all()
+db.create_all('dev')
 mati = User(
     id = 0,
     public_id = "0",
