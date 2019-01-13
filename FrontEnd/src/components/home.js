@@ -10,9 +10,9 @@ export default class Home extends Component {
     return (
       <div>
         <NavbarHome />
-        <p><BMI/></p>
-        <p><BMR/></p>
-        <p><BMR2/></p>
+        <BMI/>
+        <BMR/>
+        <BMR2/>
         <br/><br/><br/><br/><br/><br/>
         <FooterMenu />
       </div>

@@ -5,8 +5,10 @@ from sqlalchemy.orm import relationship
 from flask_marshmallow import Marshmallow
 import os
 
-db = SQLAlchemy()
-ma = Marshmallow()
+print("MODELS PRZED IMPORT")
+from . import db
+
+print("MODELS:", db)
 
 class User(db.Model):
     __tablename__ = "user"
@@ -27,16 +29,6 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User:{}>'.format(self.username)
-
-
-class UserSchema(ma.Schema):
-    class Meta:
-        # Fields to expose
-        fields = ('public_id', 'username', 'email', 'password', 'admin')
-
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
 
 
 class DietPlanUser(db.Model):
@@ -88,14 +80,6 @@ class FoodItem(db.Model):
     def __repr__(self):
         return '<FoodItem:{}>'.format(self.name)
 
-class FoodItemSchema(ma.Schema):
-    class Meta:
-        # Fields to expose
-        fields = ('name', 'calories', 'protein', 'fat', 'carbs')
-
-
-fooditem_schema = FoodItemSchema()
-fooditems_schema = FoodItemSchema(many=True)
 
 class FoodBlacklist(db.Model):
     __tablename__ = "food_black_list"

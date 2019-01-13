@@ -1,11 +1,14 @@
-from api import db
-from models import User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
+from main.model.models import User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from main.database import db
+from main import create_app
 import csv
 import sqlalchemy
 
 
+print("CREATE DB:", db)
+app = create_app('dev')
 db.drop_all()
 db.create_all()
 mati = User(
