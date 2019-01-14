@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchDietPlans } from "../actions"
+import { fetchDietPlans } from "../actions";
+import DayList from "./day_list";
 
 class DietPlan extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class DietPlan extends Component {
       <div>
         <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home/diet-plans")}>Back</button>
         {diet_plan.name}
+        <DayList dayMeals={diet_plan.plan_details} />
       </div>
     );
   }
