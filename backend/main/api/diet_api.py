@@ -62,21 +62,37 @@ def get_one_item(id):
     return jsonify({'user': item_data})
 
 
-"""Create item"""
-@diet_api.route('/create_item', methods=['POST'])
-# @token_required
-def create_item():
+"""Create or delete item"""
+@diet_api.route('/item', methods=['POST', 'DELETE'])
+@token_required
+def item(current_user):
     data = request.get_json()
+    if not data:
+        print("tutaj")
+        return make_response(jsonify({'message': 'Bad Request'}), 400)
+    if request.method == 'POST':
+        new_item = FoodItem(name=data['name'], calories=data['calories'],
+                            protein=data['protein'], fat=data['fat'], carbs=data['carbs'])
+        print(new_item)
+        print(data)
+        db.session.add(new_item)
+        db.session.commit()
 
-    new_item = FoodItem(name=data['name'], calories=data['calories'],
-                        protein=data['protein'], fat=data['fat'], carbs=data['carbs'])
-    print(new_item)
-    print(data)
-    db.session.add(new_item)
-    db.session.commit()
+        return jsonify({'message': 'New item added!',
+                        'id': new_item.id})
+    elif request.method == 'DELETE':
+        if current_user.admin:    
+            item = FoodItem.query.filter_by(id=data['id']).first()
+            if not item:
+                return make_response(jsonify({'message': 'Item not exist!'}), 404)
+            print(new_item)
+            print(data)
+            db.session.add(new_item)
+            db.session.commit()
 
-    return jsonify({'message': 'New item added!'})
-
+            return jsonify({'message': 'Item deleted!'})
+        else:
+            return jsonify({'message': 'Cannot perform that function! Admin needed!'})
 
 """Get user's diet plans"""
 @diet_api.route('/user_plans', methods=['GET'])
@@ -166,7 +182,7 @@ def create_plan(current_user):
     db.session.add(assign_plan)
     db.session.commit()
 
-    return jsonify({'message': 'New plan added!'})
+    return jsonify({'message': 'New plan added!', "id_plan":new_plan.id })
 
 
 """Assign diet plan to user"""

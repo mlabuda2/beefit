@@ -140,9 +140,11 @@ headers standardowo x-access-token
 ```
 
 
-### TWORZENIE NOWEGO FOOD ITEMA  (/create_item):
+### TWORZENIE LUB USUWANIE FOOD ITEMA  (/item):
 ```
 headers standardowo x-access-token
+
+DODAWANIE
 metoda: POST
 body: {
 "name": "item1",
@@ -151,6 +153,9 @@ body: {
 "fat": 10.3, 
 "carbs": 10.3
 }
+
+USUWANIE:
+body: {id: 1}
 ```
 
 ### PRZYPISANIE FOOD ITEMA/ITEMÓW DO DIET PLANU  (/assign_items):
