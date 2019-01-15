@@ -224,7 +224,8 @@ def create_plan(current_user):
 @token_required
 def assign_plan(current_user):
     data = request.get_json()
-
+    if not data:
+        return make_response(jsonify({'message': 'Bad Request'}), 400)
     assign_plan = DietPlanUser(user_id=data['user_id'], diet_plan_id=data['diet_plan_id'])
 
     print(assign_plan)
@@ -232,6 +233,23 @@ def assign_plan(current_user):
     db.session.commit()
 
     return jsonify({'message': 'Plan assigned!'})
+
+"""Detach diet plan from user"""
+@diet_api.route('/detach_plan', methods=['POST'])
+@token_required
+def detach_plan(current_user):
+    data = request.get_json()
+    if not data:
+        return make_response(jsonify({'message': 'Bad Request'}), 400)
+    detached_plan = (db.session.query(DietPlanUser)
+                    .filter(DietPlanUser.user_id==current_user.id)
+                    .filter(DietPlanUser.diet_plan_id==data['diet_plan_id'])).first()
+    print(detached_plan)
+
+    db.session.delete(detached_plan)
+    db.session.commit()
+
+    return jsonify({'message': 'Plan detached!'})
 
 
 """Assign food_item/items to diet plan"""
