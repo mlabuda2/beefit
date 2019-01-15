@@ -103,11 +103,10 @@ def get_one_user(current_user, public_id):
 
 """Create user by admin"""
 @user_api.route('/user', methods=['POST'])
-# @token_required
-# def create_user(current_user):
-def create_user():
-    # if not current_user.admin:
-    #     return jsonify({'message' : 'Cannot perform that function!'})
+@token_required
+def create_user(current_user):
+    if not current_user.admin:
+        return jsonify({'message' : 'Cannot perform that function!'})
 
     data = request.get_json()
 

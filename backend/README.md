@@ -79,9 +79,11 @@ headers standardowo x-access-token
 metoda: GET
 ```
 
-### TWORZENIE NOWEGO DIET PLANU  (/create_plan):
+### TWORZENIE LUB USUWANIE DIET PLANU  (/plan):
 ```
 headers standardowo x-access-token
+
+DODAWANIE
 metoda: POST
 body: {
 "name": "plan pełny",
@@ -106,14 +108,41 @@ body: {
 #user może podać itemy których nie mamy w bazie
 
 "custom_items": [   
-                    {
+                {
                     "name": "item4",
                     "calories": 10,
                     "protein": 10.6, 
                     "fat": 10.3, 
                     "carbs": 10.3
-                    }, ...
+                }, ...
                 ]
+}
+
+
+USUWANIE   (tylko ADMIN)
+metoda: DELETE
+body: {"id": 1}
+
+
+EDYCJA PLANU
+uwaga: należy podać wszystkie itemy ponieważ wszystkie stare zostają usuwane
+metoda: PUT
+body:{
+    "id_diet_plan": 0,
+    "edited_items": [ 
+                {
+                    "food_item_id": 333,
+                    "meal_time": 8,
+                    "weekday": 0,
+                    "food_item_weight": 100
+                },
+                {
+                    "food_item_id": 334,
+                    "meal_time": 12,
+                    "weekday": 0,
+                    "food_item_weight": 200
+                }
+            ]
 }
 ```
 
@@ -140,9 +169,11 @@ headers standardowo x-access-token
 ```
 
 
-### TWORZENIE NOWEGO FOOD ITEMA  (/create_item):
+### TWORZENIE LUB USUWANIE FOOD ITEMA  (/item):
 ```
 headers standardowo x-access-token
+
+DODAWANIE
 metoda: POST
 body: {
 "name": "item1",
@@ -151,6 +182,9 @@ body: {
 "fat": 10.3, 
 "carbs": 10.3
 }
+
+USUWANIE:  (TYLKO ADMIN)
+body: {"id": 1}
 ```
 
 ### PRZYPISANIE FOOD ITEMA/ITEMÓW DO DIET PLANU  (/assign_items):
