@@ -158,6 +158,17 @@ body: {
 }
 ```
 
+### ODPISANIE DIET PLANU OD CURRENT USERA  (/detach_plan):
+```
+headers standardowo x-access-token
+body:
+{
+metoda: POST
+body: {
+"diet_plan_id": 1
+}
+```
+
 ### ZWRACA WSZYSTKIE FOOD ITEMY  (/items):
 ```
 headers standardowo x-access-token
