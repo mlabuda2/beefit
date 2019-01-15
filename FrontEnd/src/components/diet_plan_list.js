@@ -15,8 +15,7 @@ class DietPlanList extends Component {
     // return diet_plans.map(plan => {
       return (
         <li key={plan.name} className="list-group-item" onClick={() =>
-          this.props.history.push(`/home/diet-plans/${plan.id_plan}`)
-        }>
+          this.props.history.push(`/home/diet-plans/${plan.id_plan}`)}>
           { plan.name }
         </li>
       );
@@ -33,7 +32,7 @@ class DietPlanList extends Component {
     return (
         <ul className="list-group col-sm-4">
           <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home")}>Back</button>
-            {console.log(diet_plans)}
+            {/* console.log(diet_plans) */}
             {this.renderList()}
         </ul>
     );

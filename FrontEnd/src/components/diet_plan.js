@@ -15,7 +15,7 @@ class DietPlan extends Component {
 
   render() {
     const { diet_plan, diet_plans } = this.props;
-    console.log("render:" + diet_plan)
+    // console.log("render:" + diet_plan)
     if (!diet_plan) {
       return (
         <div></div>
@@ -25,6 +25,7 @@ class DietPlan extends Component {
       <div>
         <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home/diet-plans")}>Back</button>
         {diet_plan.name}
+        {/* console.log(diet_plan) */}
         <DayList dayMeals={diet_plan.plan_details} />
       </div>
     );
