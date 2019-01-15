@@ -1,3 +1,3 @@
 #todo
 
-#dodać modele + endpointy tutaj
+#dodać modele(done) + endpointy tutaj
