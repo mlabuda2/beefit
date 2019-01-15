@@ -2,7 +2,7 @@ import _ from "lodash";
 import React, { Component } from "react";
 
 class DayList extends Component {
-  renderDayList() {
+  renderXYZ() {
     const dayMeals = {
       "id_plan": 0,
       "name": "PLAN DZIKA",
@@ -40,8 +40,6 @@ class DayList extends Component {
 
       ]
     }
-    // console.log("dayMeals.keys: " + Object.keys(dayMeals));
-    // console.log(dayMeals.id_plan)
     return dayMeals.plan_details.map(day_details => {
       return (
         <li key={day_details.day} className="list-group-item">
@@ -62,10 +60,8 @@ class DayList extends Component {
       "6": "Sunday"
     }
     const { dayMeals } = this.props;
+    console.log("dayMeals.length: " + dayMeals.length)
     dayMeals.map(dayPlan => {
-      // console.log('@@@');
-      // console.log(day);
-      // console.log('@@@');
       for (const [day, dietPlan] of Object.entries(dayPlan)) {
         console.log(`Dzień Tygodnia: ${daysOfWeek[day]} ${dietPlan}`);
         for (const [mealTime, meal] of Object.entries(dietPlan)) {
@@ -78,13 +74,51 @@ class DayList extends Component {
     });
   }
 
+  renderDayList() {
+    const daysOfWeek = {
+      "0": "Monday",
+      "1": "Tuesday",
+      "2": "Wednesday",
+      "3": "Thursday",
+      "4": "Friday",
+      "5": "Saturday",
+      "6": "Sunday"
+    }
+    const { dayMeals } = this.props;
+
+    return dayMeals.map(dayPlan => {
+      return _.map(dayPlan, (dietPlan, day) => {
+        // console.log(`Dzień Tygodnia: ${daysOfWeek[day]} ${dietPlan}`);
+        return (
+          <div>
+            <li className="list-group-item">{daysOfWeek[day]}</li>
+            {
+              _.map(dietPlan, (meal, mealTime) => {
+                return (
+                  <ul key={mealTime}>
+                    <li className="list-group-item">{mealTime}</li>
+                    <ul>
+                    {
+                      meal.map(product => {
+                        return <li className="list-group-item" key={product.name}>{product.name}: {product.weight}</li>
+                      })  // END .map
+                    }
+                    </ul>
+                  </ul>
+                )
+              })  // END _.map
+            }
+          </div>
+        )
+      })  // END _.map
+    });
+  }
+
   render() {
-    console.log('ee')
     return (
-      <div>
-        daymeals:
-        {this.renderNewDayList()}
-      </div>
+      <ul className="list-group col-sm-4">
+        {this.renderDayList()}
+      </ul>
     );
   }
 }
