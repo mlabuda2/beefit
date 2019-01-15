@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchDietPlans } from "../actions";
 import DayList from "./day_list";
 
-class DietPlan extends Component {
+class DietPlanItem extends Component {
   componentDidMount() {
     const { diet_plans } = this.props;
     // if (diet_plans === null || diet_plans.length == 0) {
@@ -39,4 +39,4 @@ function mapStateToProps({ diet_plans }, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { fetchDietPlans })(DietPlan);
+export default connect(mapStateToProps, { fetchDietPlans })(DietPlanItem);

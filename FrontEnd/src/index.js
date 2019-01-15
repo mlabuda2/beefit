@@ -11,7 +11,7 @@ import RegisterUser from './components/register_user';
 import LoginUser from './components/login_user';
 import Home from './components/home';
 import DietPlanList from './components/diet_plan_list';
-import DietPlan from './components/diet_plan';
+import DietPlanItem from './components/diet_plan_item';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -24,7 +24,7 @@ ReactDOM.render(
         <Route exact path="/register" component={RegisterUser} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/home/diet-plans" component={DietPlanList} />
-        <Route exact path="/home/diet-plans/:id" component={DietPlan} />
+        <Route exact path="/home/diet-plans/:id" component={DietPlanItem} />
         <Route exact path="/" component={App} />
       </Switch>
     </div>
