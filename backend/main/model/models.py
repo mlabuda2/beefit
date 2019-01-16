@@ -50,6 +50,48 @@ class DietPlan(db.Model):
     def __repr__(self):
         return '<DietPlan:{}>'.format(self.name)
 
+class TrainingPlanUser(db.Model):
+    __tablename__ = "training_plan_user"
+    """ Create many to many relationship User<->TrainingPlan table"""
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    training_plan_id = Column(Integer, ForeignKey('training_plan.id'))
+
+    def __repr__(self):
+        return '<DietPlanUser:User_id {} has {} training_plan_id>'.format(self.user_id, self.diet_plan_id)
+
+class TrainingPlan(db.Model):
+    __tablename__ = "training_plan"
+    """ Create TrainingPlan table"""
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50))
+
+    def __repr__(self):
+        return '<TrainingPlan:{}>'.format(self.name)
+
+class TrainingTrainingPlan(db.Model):
+    __tablename__ = "training_training_plan"
+    """ Create many to many relationship Training<->Training table"""
+    id = Column(Integer, primary_key=True)
+    training_id = Column(Integer, ForeignKey('training.id'))
+    training_plan_id = Column(Integer, ForeignKey('training_plan.id'))
+    training_series = Column(Integer)
+    training_repeats = Column(Integer)
+    breaks_series = Column(Integer) #przerwa w sekundach między seriami
+    breaks_trainings = Column(Integer) #przerwa w sekundach między ćwiczeniami
+    type = Column(String) #fbw / split itp
+    interval = Column(Integer) # 1-dniowy/ 2-dniowy itp
+
+# tabela z ćwiczeniami
+class Training(db.Model):
+    __tablename__ = "training"
+    """ Create Training table"""
+    id = Column(Integer, primary_key=True)
+    name = Column(String(120), unique=True)
+    body_part = Column(String)
+
+    def __repr__(self):
+        return '<Training:{}>'.format(self.name)
 
 class DietPlanFoodItem(db.Model):
     __tablename__ = "diet_plan_food_item"
