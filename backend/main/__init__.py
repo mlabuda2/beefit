@@ -8,6 +8,7 @@ print("PRZED IMPORTAMI API I DB MAIN INIT")
 
 from .api import user_api
 from .api import diet_api
+from .api import training_api
 from .database import db
 from .config import config_by_name
 
@@ -22,6 +23,7 @@ def create_app(config_name):
     app.config.from_object(config_by_name[config_name])
     app.register_blueprint(user_api)
     app.register_blueprint(diet_api)
+    app.register_blueprint(training_api)
     app.app_context().push()
 
     db.init_app(app)

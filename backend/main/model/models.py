@@ -80,7 +80,7 @@ class TrainingTrainingPlan(db.Model):
     training_repeats = Column(Integer)
     breaks_series = Column(Integer) #przerwa w sekundach między seriami
     breaks_trainings = Column(Integer) #przerwa w sekundach między ćwiczeniami
-    interval = Column(Integer) # 1-dniowy/ 2-dniowy itp
+    weekday = Column(Integer) # jeśli plan jest więcej niż 1 dniowy
 
 # tabela z ćwiczeniami
 class Training(db.Model):

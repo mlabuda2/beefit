@@ -8,6 +8,7 @@ from main import create_app
 
 from main.api.user_api import user_api
 from main.api.diet_api import diet_api
+from main.api.training_api import training_api
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 

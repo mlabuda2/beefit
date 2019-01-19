@@ -177,7 +177,7 @@ training_trainingplan1 = TrainingTrainingPlan(
     training_repeats = 10,
     breaks_series = 10, #przerwa w sekundach między seriami
     breaks_trainings = 60, #przerwa w sekundach między ćwiczeniami
-    interval = 3 # 1-dniowy/ 2-dniowy itp
+    weekday = 3 # 1-dniowy/ 2-dniowy itp
 )
 training_trainingplan2 = TrainingTrainingPlan(
     id = 1,
@@ -187,7 +187,17 @@ training_trainingplan2 = TrainingTrainingPlan(
     training_repeats = 12,
     breaks_series = 20, #przerwa w sekundach między seriami
     breaks_trainings = 120, #przerwa w sekundach między ćwiczeniami
-    interval = 1 # 1-dniowy/ 2-dniowy itp
+    weekday = 1 # 1-dniowy/ 2-dniowy itp
+)
+training_trainingplan3 = TrainingTrainingPlan(
+    id = 2,
+    training_id = 0,
+    training_plan_id = 1,
+    training_series = 10,
+    training_repeats = 8,
+    breaks_series = 25, #przerwa w sekundach między seriami
+    breaks_trainings = 180, #przerwa w sekundach między ćwiczeniami
+    weekday = 1 # 1-dniowy/ 2-dniowy itp
 )
 
 db.session.add(mati)
@@ -215,6 +225,7 @@ db.session.add(train_plan_user)
 db.session.add(train_plan_user_2)
 db.session.add(training_trainingplan1)
 db.session.add(training_trainingplan2)
+db.session.add(training_trainingplan3)
 db.session.commit()
 
 print(User.query.all())
