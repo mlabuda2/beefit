@@ -12,13 +12,6 @@ from ..database import db
 from ..model.models import User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
 from .user_api import token_required
 from . import diet_api
-# app = Flask(__name__)
-# app.register_blueprint(user_api)
-# basedir = os.path.abspath(os.path.dirname(__file__))
-
-# app.app_context().push()
-# db.init_app(app)
-# CORS(app)
 
 
 """Get all food items"""
@@ -59,7 +52,7 @@ def get_one_item(id):
     item_data['fat'] = item.fat
     item_data['carbs'] = item.carbs
 
-    return jsonify({'user': item_data})
+    return jsonify({'item': item_data})
 
 
 """Create or delete item"""
