@@ -188,7 +188,7 @@ training_trainingplan2 = TrainingTrainingPlan(
     breaks_series = 20, #przerwa w sekundach między seriami
     breaks_trainings = 120, #przerwa w sekundach między ćwiczeniami
     interval = 1 # 1-dniowy/ 2-dniowy itp
-
+)
 
 db.session.add(mati)
 db.session.add(wojtek)
