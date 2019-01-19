@@ -5,8 +5,15 @@ import { fetchDietPlans } from "../actions"
 
 class DietPlanList extends Component {
   componentDidMount() {
-    this.props.fetchDietPlans();
+    const { diet_plans } = this.props;
+    // if (diet_plans === null || diet_plans.length == 0) {
+    if (Object.keys(diet_plans).length == 0) {
+      this.props.fetchDietPlans();
+    }
   }
+  // componentDidMount() {
+  //   this.props.fetchDietPlans();
+  // }
 
   renderList() {
     const { diet_plans } = this.props;
@@ -14,7 +21,7 @@ class DietPlanList extends Component {
     // const { diet_plans } = this.props;
     // return diet_plans.map(plan => {
       return (
-        <li key={plan.name} className="list-group-item" onClick={() =>
+        <li key={plan.name} className="list-group-item" style={{cursor: 'pointer'}} onClick={() =>
           this.props.history.push(`/home/diet-plans/${plan.id_plan}`)}>
           { plan.name }
         </li>

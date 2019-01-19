@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchDietPlans } from "../actions";
+import { fetchDietPlans, deleteDietPlan } from "../actions";
 import DayList from "./day_list";
 
 class DietPlanItem extends Component {
@@ -11,6 +11,15 @@ class DietPlanItem extends Component {
       this.props.fetchDietPlans();
       console.log("DietPlan - componentDidMount: " + diet_plans);
     }
+  }
+
+  onDeleteClick() {
+    console.log("Inside of: onDeleteClick()");
+    const { id } = this.props.match.params;
+
+    this.props.deleteDietPlan(id, () => {
+      this.props.history.push("/home/diet-plans");
+    });
   }
 
   render() {
@@ -24,6 +33,7 @@ class DietPlanItem extends Component {
     return (
       <div>
         <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home/diet-plans")}>Back</button>
+        <button type="submit" className="btn btn-danger pull-xs-right" onClick={this.onDeleteClick.bind(this)}>DELETE</button>
         {diet_plan.name}
         {/* console.log(diet_plan) */}
         <DayList dayMeals={diet_plan.plan_details} />
@@ -39,4 +49,4 @@ function mapStateToProps({ diet_plans }, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { fetchDietPlans })(DietPlanItem);
+export default connect(mapStateToProps, { fetchDietPlans, deleteDietPlan })(DietPlanItem);
