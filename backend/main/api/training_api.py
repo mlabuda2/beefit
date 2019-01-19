@@ -103,7 +103,6 @@ def get_user_plan(current_user):
             .filter(TrainingTrainingPlan.training_id == Training.id)
             .all())
 
-        #TODO
         data["plan_details"] = []
         all_days = dict()
         for item in training_plan_items:
@@ -126,7 +125,7 @@ def get_user_plan(current_user):
         data["plan_details"].append(all_days)
         output.append(data)
 
-    return jsonify({'my_diet_plans': output})
+    return jsonify({'my_training_plans': output})
 
 
 #TODO
@@ -271,49 +270,48 @@ def assign_item(current_user):
 
 
 #TODO
-# """Get all training plans"""
-# @training_api.route('/all_plans', methods=['GET'])
-# @token_required
-# def get_all_plans(current_user):
-#     output = []
+"""Get all training plans"""
+@training_api.route('/all_training_plans', methods=['GET'])
+@token_required
+def get_all_plans(current_user):
+    output = []
 
-#     plans = db.session.query(DietPlan).all()
-#     print("MY PLANS: ", plans)
+    plans = db.session.query(TrainingPlan).all()
+    print("MY PLANS: ", plans)
 
-#     for plan in plans:
-#         data = {}
-#         data['name'] = plan.name
-#         data['id_plan'] = plan.id
+    for plan in plans:
+        data = {}
+        data['name'] = plan.name
+        data['id_plan'] = plan.id
+        data['type'] = plan.type
 
-#         diet_plan_items = (db.session.query(DietPlanFoodItem,FoodItem)
-#             .filter(DietPlanFoodItem.diet_plan_id == plan.id)
-#             .filter(DietPlanFoodItem.food_item_id == FoodItem.id)
-#             .all())
+        training_plan_items = (db.session.query(TrainingTrainingPlan,Training)
+            .filter(TrainingTrainingPlan.training_plan_id == plan.id)
+            .filter(TrainingTrainingPlan.training_id == Training.id)
+            .all())
 
-#         data["plan_details"] = []
-#         all_days = dict()
-#         for item in diet_plan_items:
-#             print("ITEM: ", item)
+        data["plan_details"] = []
+        all_days = dict()
+        for item in training_plan_items:
+            weekday = item.TrainingTrainingPlan.weekday # 3
 
-#             weekday = item.DietPlanFoodItem.weekday # 0  0
-#             hour = item.DietPlanFoodItem.meal_time #  8  16
+            if not all_days.get(weekday, ''):
+                all_days[weekday] = [] #{ 3: {} }
 
-#             if not all_days.get(weekday, ''):
-#                 all_days[weekday] = dict() #{ 0: {} }
-#             if not all_days[weekday].get(hour, ''):
-#                 all_days[weekday][hour] = []
+            all_days[weekday].append({"name": item.Training.name,
+                                      "body_part": item.Training.body_part,
+                                      "training_series": item.TrainingTrainingPlan.training_series,
+                                      "training_repeats": item.TrainingTrainingPlan.training_repeats,
+                                      "breaks_series": item.TrainingTrainingPlan.breaks_series,
+                                      "breaks_trainings": item.TrainingTrainingPlan.breaks_trainings,
+                                     })
+            print("ALL: ", all_days)
 
-#             all_days[weekday][hour].append({"name": item.FoodItem.name,
-#                                             "weight": item.DietPlanFoodItem.food_item_weight,
-#                                             "pieces": item.DietPlanFoodItem.food_item_pieces
-#                                             })
-#             print("ALL: ", all_days)
+        data["plan_details"].append(all_days)
+        output.append(data)
 
-#         data["plan_details"].append(all_days)
-#         print("DODAJĘ ALL DO plan_details ")
-#         output.append(data)
+    return jsonify({'training_plans': output})
 
-#     return jsonify({'diet_plans': output})
 
 """Get user's training plan by id"""
 @training_api.route('/training_plan/<id>', methods=['GET'])
@@ -331,34 +329,31 @@ def get_plan_by_id(current_user, id):
     data['username'] = current_user.username
     data['name'] = plan.name
     data['id_plan'] = plan.id
+    data['type'] = plan.type
 
     training_plan_items = (db.session.query(TrainingTrainingPlan,Training)
         .filter(TrainingTrainingPlan.training_plan_id == plan.id)
-        .filter(TrainingTrainingPlan.training_item_id == Training.id)
+        .filter(TrainingTrainingPlan.training_id == Training.id)
         .all())
 
-    #TODO
-    # data["plan_details"] = []
-    # all_days = dict()
-    # for item in training_plan_items:
-    #     # print("ITEM: ", item)
+    data["plan_details"] = []
+    all_days = dict()
+    for item in training_plan_items:
+        weekday = item.TrainingTrainingPlan.weekday # 3
 
-    #     weekday = item.DietPlanFoodItem.weekday # 0  0
-    #     hour = item.DietPlanFoodItem.meal_time #  8  16
+        if not all_days.get(weekday, ''):
+            all_days[weekday] = [] #{ 3: {} }
 
-    #     if not all_days.get(weekday, ''):
-    #         all_days[weekday] = dict() #{ 0: {} }
-    #     if not all_days[weekday].get(hour, ''):
-    #         all_days[weekday][hour] = []
+        all_days[weekday].append({"name": item.Training.name,
+                                  "body_part": item.Training.body_part,
+                                  "training_series": item.TrainingTrainingPlan.training_series,
+                                  "training_repeats": item.TrainingTrainingPlan.training_repeats,
+                                  "breaks_series": item.TrainingTrainingPlan.breaks_series,
+                                  "breaks_trainings": item.TrainingTrainingPlan.breaks_trainings
+                                })
+        print("ALL: ", all_days)
 
-    #     all_days[weekday][hour].append({"name": item.FoodItem.name,
-    #                                     "weight": item.DietPlanFoodItem.food_item_weight,
-    #                                     "pieces": item.DietPlanFoodItem.food_item_pieces
-    #                                     })
-    #     print("ALL: ", all_days)
+    data["plan_details"].append(all_days)
+    output.append(data)
 
-    # data["plan_details"].append(all_days)
-    # # print("DODAJĘ ALL DO plan_details ")
-    # output.append(data)
-
-    return jsonify({'my_training_plans': output})
+    return jsonify({'training_plan': output})
