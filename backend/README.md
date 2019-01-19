@@ -1,13 +1,18 @@
 
-### PIERWSZE URUCHAMIANIE:
+# DOKUMENTACJA API
+
+##### PIERWSZE URUCHAMIANIE:
 ```
 1. python create.py
 ```
-### KOLEJNE URUCHAMIANIA:
+#### KOLEJNE URUCHAMIANIA:
 ```
 1.'python manage.py run'
 ```
-### LOGOWANIE ADMIN
+
+## API UŻYTKOWNIKÓW
+
+#### LOGOWANIE ADMIN
 ```
 (postman)
 Basic Auth
@@ -15,13 +20,13 @@ U: mati
 P: mati
 otrzymujemy token
 ```
-### DZIAŁANIA Z TOKENEM
+#### DZIAŁANIA Z TOKENEM
 ```
 header: 
     key: x-access-token
     value: "tutaj otrzymany token"
 ```
-### REJESTRACJA NOWEGO UŻYTKOWNIKA (/register):
+#### REJESTRACJA NOWEGO UŻYTKOWNIKA (/register):
 ```
 metoda: POST
 body: {
@@ -30,7 +35,11 @@ body: {
 "password": "user1"
 }
 ```
-### ZWRACA PLANY ZALOGOWANEGO USERA (/user_plans): + wyjaśnienie responsea
+
+
+## API PLANÓW DIETETYCZNYCH
+
+#### ZWRACA PLANY ZALOGOWANEGO USERA (/user_plans): + wyjaśnienie responsea
 ```
 headers standardowo x-access-token
 metoda: GET
@@ -73,13 +82,13 @@ wyjaśnienie responsea:
             ],
 ```
 
-### ZWRACA DIET PLAN BY ID (/plan/id):
+#### ZWRACA DIET PLAN BY ID (/plan/id):
 ```
 headers standardowo x-access-token
 metoda: GET
 ```
 
-### TWORZENIE LUB USUWANIE DIET PLANU  (/plan):
+#### TWORZENIE, USUWANIE LUB EDYCJA DIET PLANU  (/plan):
 ```
 headers standardowo x-access-token
 
@@ -146,7 +155,7 @@ body:{
 }
 ```
 
-### PRZYPISANIE DIET PLANU DO USERA  (/assign_plan):
+#### PRZYPISANIE DIET PLANU DO USERA  (/assign_plan):
 ```
 headers standardowo x-access-token
 body:
@@ -158,7 +167,7 @@ body: {
 }
 ```
 
-### ODPISANIE DIET PLANU OD CURRENT USERA  (/detach_plan):
+#### ODPISANIE DIET PLANU OD CURRENT USERA  (/detach_plan):
 ```
 headers standardowo x-access-token
 body:
@@ -169,18 +178,18 @@ body: {
 }
 ```
 
-### ZWRACA WSZYSTKIE FOOD ITEMY  (/items):
+#### ZWRACA WSZYSTKIE FOOD ITEMY  (/items):
 ```
 headers standardowo x-access-token
 ```
 
-### ZWRACA FOOD ITEM BY ID  (/item/id):
+#### ZWRACA FOOD ITEM BY ID  (/item/id):
 ```
 headers standardowo x-access-token
 ```
 
 
-### TWORZENIE LUB USUWANIE FOOD ITEMA  (/item):
+#### TWORZENIE LUB USUWANIE FOOD ITEMA  (/item):
 ```
 headers standardowo x-access-token
 
@@ -198,7 +207,7 @@ USUWANIE:  (TYLKO ADMIN)
 body: {"id": 1}
 ```
 
-### PRZYPISANIE FOOD ITEMA/ITEMÓW DO DIET PLANU  (/assign_items):
+#### PRZYPISANIE FOOD ITEMA/ITEMÓW DO DIET PLANU  (/assign_items):
 ```
 headers standardowo x-access-token
 metoda: POST
@@ -223,8 +232,118 @@ body: {
 }
 ```
 
-Do rozważenia:
--czy w fooditem nie dodać public_id generowane na froncie?
-    korzyści:
-        -można dodać custom item do planu przed dodaniem do bazy, a jeśli go nie ma to trzeba najpierw
-        zacommitować go do bazy i dopiero wtedy tworzy się auto id po którym można dodać do planu item
+
+## API PLANÓW TRENINGOWYCH
+
+#### TWORZENIE LUB USUWANIE PLANU TRENINGOWEGO  (/training_plan):
+```
+headers standardowo x-access-token
+
+DODAWANIE
+metoda: POST
+BODY:
+{
+"name": "plan utworzony przez POST",
+"type": "FBW",
+"our_trainings": [
+                {
+			    "training_id": 1,          # id naszego ćwiczenia z bazy
+			    "training_series": 5,
+			    "training_repeats": 9,
+			    "breaks_series": 20,
+			    "breaks_trainings": 120,
+			    "weekday": 1
+                }, {...}, ...
+            ]
+}
+
+
+USUWANIE   (tylko ADMIN)
+metoda: DELETE
+body: {"id": 1}
+
+
+EDYCJA PLANU
+uwaga: należy podać wszystkie ćwiczenia(our_trainigs) ponieważ wszystkie stare zostają usuwane
+metoda: PUT
+body:
+{
+    "id_training_plan": 1,
+    "edited_trainings": [
+                {
+			    "training_id": 1,          # id naszego ćwiczenia z bazy
+			    "training_series": 5,
+			    "training_repeats": 9,
+			    "breaks_series": 20,
+			    "breaks_trainings": 120,
+			    "weekday": 1
+                }, {...}, ...
+            ]
+}
+```
+
+#### ZWRACA PLANY ZALOGOWANEGO USERA (/user_train_plans): + wyjaśnienie responsea
+```
+headers standardowo x-access-token
+metoda: GET
+
+wyjaśnienie responsea: 
+{
+    "my_training_plans": [
+        {
+            "id_plan": 1,
+            "name": "PLAN Trening 2",
+            "plan_details": [
+                {
+                    "1": [  #tutaj 1 to dzień czyli wtorek
+                        {
+                            "body_part": "Klatka piersiowa",
+                            "breaks_series": 20,
+                            "breaks_trainings": 120,
+                            "name": "Podciągnięcia",
+                            "training_repeats": 12,
+                            "training_series": 6
+                        },
+                        {
+                            "body_part": "Plecy",
+                            "breaks_series": 25,
+                            "breaks_trainings": 180,
+                            "name": "Wznosy sztangi nad głową",
+                            "training_repeats": 8,
+                            "training_series": 10
+                        }
+                    ]
+                }
+            ],
+            "type": "Split",
+            "username": "mati"
+        },
+        {
+            "id_plan": 2,
+            "name": "plan utworzony przez POST",
+            "plan_details": [
+                {
+                    "1": [
+                        {
+                            "body_part": "Klatka piersiowa",
+                            "breaks_series": 20,
+                            "breaks_trainings": 120,
+                            "name": "Podciągnięcia",
+                            "training_repeats": 9,
+                            "training_series": 5
+                        }
+                    ]
+                }
+            ],
+            "type": "FBW",
+            "username": "mati"
+        }
+    ]
+}
+```
+
+#### ZWRACA TRAINING PLAN BY ID (/training_plan/id):
+```
+headers standardowo x-access-token
+metoda: GET
+```

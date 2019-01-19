@@ -73,7 +73,7 @@ def training(current_user):
             db.session.delete(training)
             db.session.commit()
 
-            return jsonify({'message': 'training deleted!'})
+            return jsonify({'message': 'Training deleted!'})
         else:
             return jsonify({'message': 'Cannot perform that function! Admin needed!'})
 
@@ -128,88 +128,87 @@ def get_user_plan(current_user):
     return jsonify({'my_training_plans': output})
 
 
-#TODO
-# """Create training plan"""
-# @diet_api.route('/diet_plan', methods=['DELETE', 'PUT', 'POST'])
-# @token_required
-# def create_plan(current_user):
-#     data = request.get_json()
-#     if not data:
-#         return make_response(jsonify({'message': 'Bad Request'}), 400)
+"""Create/delete/edit training plan"""
+@training_api.route('/training_plan', methods=['DELETE', 'PUT', 'POST'])
+@token_required
+def create_plan(current_user):
+    data = request.get_json()
+    if not data:
+        return make_response(jsonify({'message': 'Bad Request'}), 400)
 
-#     if request.method == 'POST':
-#         # jeśli user dodaje swoje itemy - najpierw wrzucam je do (jego profilu?) bazy
-#         #TODO model CustomFoodItem n:1 User
-#         if data.get('custom_items', ''):
-#             for custom_item in data['custom_items']:
-#                 new_item = FoodItem(name=custom_item['name'], calories=custom_item['calories'],
-#                             protein=custom_item['protein'], fat=custom_item['fat'], carbs=custom_item['carbs'])
-#             print("New item ADDED: ",new_item)
-#             db.session.add(new_item)
+    if request.method == 'POST':
+    #     # jeśli user dodaje swoje itemy - najpierw wrzucam je do (jego profilu?) bazy
+    #     #TODO model CustomFoodItem n:1 User
+    #     if data.get('custom_items', ''):
+    #         for custom_item in data['custom_items']:
+    #             new_item = FoodItem(name=custom_item['name'], calories=custom_item['calories'],
+    #                         protein=custom_item['protein'], fat=custom_item['fat'], carbs=custom_item['carbs'])
+    #         print("New item ADDED: ",new_item)
+    #         db.session.add(new_item)
 
-#         # najpierw dodaję plan i przypisuję go do current_usera
-#         new_plan = DietPlan(name=data['name'])
-#         db.session.add(new_plan)
-#         db.session.commit()
-#         assign_plan = DietPlanUser(user_id=current_user.id, diet_plan_id=new_plan.id)
+        # najpierw dodaję plan i przypisuję go do current_usera
+        new_plan = TrainingPlan(name=data['name'], type=data['type'])
+        db.session.add(new_plan)
+        db.session.commit()
+        assign_plan = TrainingPlanUser(user_id=current_user.id, training_plan_id=new_plan.id)
 
-#         #dodawanie do planu itemów, z naszej bazy, które podał user
-#         if data.get('our_items', ''):
-#             for item in data['our_items']:
-#                 assign_item = DietPlanFoodItem(food_item_id = item['food_item_id'],
-#                                                 diet_plan_id = new_plan.id,
-#                                                 meal_time = item['meal_time'],
-#                                                 weekday = item['weekday'],
-#                                                 food_item_weight = item['food_item_weight'],
-#                                                 food_item_pieces = item.get('food_item_pieces', None)
-#                                             )
-#                 db.session.add(assign_item)
-#                 print(assign_item)
+        #dodawanie do planu itemów, z naszej bazy, które podał user
+        if data.get('our_trainings', ''):
+            for item in data['our_trainings']:
+                assign_item = TrainingTrainingPlan(training_id = item['training_id'],
+                                                   training_plan_id = new_plan.id,
+                                                   training_series = item['training_series'],
+                                                   training_repeats = item['training_repeats'],
+                                                   breaks_series = item['breaks_series'], #przerwa w sekundach między seriami
+                                                   breaks_trainings = item['breaks_trainings'], #przerwa w sekundach między ćwiczeniami
+                                                   weekday = item['weekday'], # 1-dniowy/ 2-dniowy itp
+                                                  )
+                db.session.add(assign_item)
+                print(assign_item)
 
-#         print("DODAJĘ PLAN: ",new_plan)
-#         db.session.add(assign_plan)
-#         db.session.commit()
+        print("DODAJĘ PLAN: ",new_plan)
+        db.session.add(assign_plan)
+        db.session.commit()
 
-#         return jsonify({'message': 'New plan added!', "id_plan":new_plan.id })
-#     elif request.method == 'DELETE':
-#         if current_user.admin:    
-#             diet_plan = DietPlan.query.filter_by(id=data['id']).first()
-#             if not diet_plan:
-#                 return make_response(jsonify({'message': 'Diet plan not exist!'}), 404)
-#             db.session.delete(diet_plan)
-#             db.session.commit()
+        return jsonify({'message': 'New trainig plan added!', "id_plan":new_plan.id })
+    elif request.method == 'DELETE':
+        if current_user.admin:    
+            training_plan = TrainingPlan.query.filter_by(id=data['id']).first()
+            if not training_plan:
+                return make_response(jsonify({'message': 'Training plan not exist!'}), 404)
+            db.session.delete(training_plan)
+            db.session.commit()
 
-#             return jsonify({'message': 'Diet plan deleted!'})
-#         else:
-#             return jsonify({'message': 'Cannot perform that function! Admin needed!'})
+            return jsonify({'message': 'Training plan deleted!'})
+        else:
+            return jsonify({'message': 'Cannot perform that function! Admin needed!'})
    
-#     elif request.method == 'PUT':
-#         diet_plan = DietPlan.query.filter_by(id=data['id_diet_plan']).first()
-#         diet_plan_food_items = DietPlanFoodItem.query.filter_by(diet_plan_id = diet_plan.id).all()
+    elif request.method == 'PUT':
+        training_plan = TrainingPlan.query.filter_by(id=data['id_training_plan']).first()
+        training_train_plan = TrainingTrainingPlan.query.filter_by(training_plan_id = training_plan.id).all()
 
-#         # usuwam stare wszystkie itemy z planu 
-#         for item in diet_plan_food_items:
-#             db.session.delete(item)
-#         db.session.commit
+        # usuwam stare wszystkie itemy z planu 
+        for item in training_train_plan:
+            db.session.delete(item)
+        db.session.commit
 
-#         # dodaje nowe itemy do planu
-#         if data.get('edited_items', ''):
-#             for item in data['edited_items']:
-#                 edited_item = DietPlanFoodItem(food_item_id = item['food_item_id'],
-#                                                 diet_plan_id = diet_plan.id,
-#                                                 meal_time = item['meal_time'],
-#                                                 weekday = item['weekday'],
-#                                                 food_item_weight = item['food_item_weight'],
-#                                                 food_item_pieces = item.get('food_item_pieces', None)
-#                                             )
-#                 db.session.add(edited_item)
-#                 print(edited_item)
+        
+        #dodaje nowe ćwiczenia do planu
+        if data.get('edited_trainings', ''):
+            for item in data['edited_trainings']:
+                edited_training = TrainingTrainingPlan(training_id = item['training_id'],
+                                                       training_plan_id = training_plan.id,
+                                                       training_series = item['training_series'],
+                                                       training_repeats = item['training_repeats'],
+                                                       breaks_series = item['breaks_series'], #przerwa w sekundach między seriami
+                                                       breaks_trainings = item['breaks_trainings'], #przerwa w sekundach między ćwiczeniami
+                                                       weekday = item['weekday'], # 1-dniowy/ 2-dniowy itp
+                                                      )
+                db.session.add(edited_training)
+                print(edited_training)
 
-#         db.session.commit()
-#         return jsonify({'message': 'Plan edited!'})
-
-
-
+        db.session.commit()
+        return jsonify({'message': 'Training plan edited!'})
 
 """Assign training plan to user"""
 @training_api.route('/assign_training_plan', methods=['POST'])
@@ -247,7 +246,7 @@ def detach_plan(current_user):
 """Assign training/trainings to diet plan"""
 @training_api.route('/assign_trainings', methods=['POST'])
 @token_required
-def assign_item(current_user):
+def assign_training(current_user):
     data = request.get_json()
 
     if data.get('trainings', ''):
@@ -258,8 +257,8 @@ def assign_item(current_user):
                                                training_repeats = item['training_repeats'],
                                                breaks_series = item['breaks_series'], #przerwa w sekundach między seriami
                                                breaks_trainings = item['breaks_trainings'], #przerwa w sekundach między ćwiczeniami
-                                               interval = item['interval'], # 1-dniowy/ 2-dniowy itp
-                                        )
+                                               weekday = item['weekday'], # 1-dniowy/ 2-dniowy itp
+                                              )
             db.session.add(assign_item)
             print(assign_item)
 
