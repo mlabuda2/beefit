@@ -1,4 +1,4 @@
-from main.model.models import User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem
+from main.model.models import User, FoodItem, DietPlan, DietPlanUser, DietPlanFoodItem, Training, TrainingPlan, TrainingPlanUser, TrainingTrainingPlan
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from main.database import db
@@ -126,8 +126,6 @@ dietPlanFoodItem3 = DietPlanFoodItem(
     food_item_pieces = 4
 )
 
-
-
 diet_plan_user = DietPlanUser(
     user_id = 0,
     diet_plan_id = 1
@@ -142,6 +140,64 @@ diet_plan_user_3 = DietPlanUser(
     user_id = 1,
     diet_plan_id = 1
 )
+
+training = Training(
+    id = 0,
+    name = "Wznosy sztangi nad głową",
+    body_part = "Plecy"
+)
+training1 = Training(
+    id = 1,
+    name = "Podciągnięcia",
+    body_part = "Klatka piersiowa"
+)
+training_plan = TrainingPlan(
+    id = 0,
+    name = "PLAN Trening 1",
+    type = "FBW" #fbw / split itp
+)
+training_plan2 = TrainingPlan(
+    id = 1,
+    name = "PLAN Trening 2",
+    type = "Split" #fbw / split itp
+)
+train_plan_user = TrainingPlanUser(
+    user_id = 0,
+    training_plan_id = 1
+)
+train_plan_user_2 = TrainingPlanUser(
+    user_id = 1,
+    training_plan_id = 0
+)
+training_trainingplan1 = TrainingTrainingPlan(
+    id = 0,
+    training_id = 0,
+    training_plan_id = 0,
+    training_series = 5,
+    training_repeats = 10,
+    breaks_series = 10, #przerwa w sekundach między seriami
+    breaks_trainings = 60, #przerwa w sekundach między ćwiczeniami
+    interval = 3 # 1-dniowy/ 2-dniowy itp
+)
+training_trainingplan2 = TrainingTrainingPlan(
+    id = 1,
+    training_id = 1,
+    training_plan_id = 1,
+    training_series = 6,
+    training_repeats = 12,
+    breaks_series = 20, #przerwa w sekundach między seriami
+    breaks_trainings = 120, #przerwa w sekundach między ćwiczeniami
+    interval = 1 # 1-dniowy/ 2-dniowy itp
+)
+db.session.add(training)
+db.session.add(training1)
+db.session.add(training_plan)
+db.session.add(training_plan2)
+db.session.add(train_plan_user)
+db.session.add(train_plan_user_2)
+db.session.add(training_trainingplan1)
+db.session.add(training_trainingplan2)
+db.session.commit()
 
 db.session.add(mati)
 db.session.add(wojtek)

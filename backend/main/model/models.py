@@ -65,6 +65,7 @@ class TrainingPlan(db.Model):
     """ Create TrainingPlan table"""
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
+    type = Column(String) #fbw / split itp
 
     def __repr__(self):
         return '<TrainingPlan:{}>'.format(self.name)
@@ -79,7 +80,6 @@ class TrainingTrainingPlan(db.Model):
     training_repeats = Column(Integer)
     breaks_series = Column(Integer) #przerwa w sekundach między seriami
     breaks_trainings = Column(Integer) #przerwa w sekundach między ćwiczeniami
-    type = Column(String) #fbw / split itp
     interval = Column(Integer) # 1-dniowy/ 2-dniowy itp
 
 # tabela z ćwiczeniami
