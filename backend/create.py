@@ -188,19 +188,11 @@ training_trainingplan2 = TrainingTrainingPlan(
     breaks_series = 20, #przerwa w sekundach między seriami
     breaks_trainings = 120, #przerwa w sekundach między ćwiczeniami
     interval = 1 # 1-dniowy/ 2-dniowy itp
-)
-db.session.add(training)
-db.session.add(training1)
-db.session.add(training_plan)
-db.session.add(training_plan2)
-db.session.add(train_plan_user)
-db.session.add(train_plan_user_2)
-db.session.add(training_trainingplan1)
-db.session.add(training_trainingplan2)
-db.session.commit()
+
 
 db.session.add(mati)
 db.session.add(wojtek)
+
 db.session.add(item1)
 db.session.add(item2)
 db.session.add(plan)
@@ -214,6 +206,17 @@ db.session.add(diet_plan_user)
 db.session.add(diet_plan_user_2)
 db.session.add(diet_plan_user_3)
 db.session.commit()
+
+db.session.add(training)
+db.session.add(training1)
+db.session.add(training_plan)
+db.session.add(training_plan2)
+db.session.add(train_plan_user)
+db.session.add(train_plan_user_2)
+db.session.add(training_trainingplan1)
+db.session.add(training_trainingplan2)
+db.session.commit()
+
 print(User.query.all())
 print(DietPlan.query.all())
 print(DietPlanUser.query.all())
