@@ -155,14 +155,13 @@ body:{
 }
 ```
 
-#### PRZYPISANIE DIET PLANU DO USERA  (/assign_plan):
+#### PRZYPISANIE DIET PLANU DO CURRENT USERA  (/assign_plan):
 ```
 headers standardowo x-access-token
 body:
 {
 metoda: POST
 body: {
-"user_id": 1,
 "diet_plan_id": 1
 }
 ```
@@ -235,7 +234,7 @@ body: {
 
 ## API PLANÓW TRENINGOWYCH
 
-#### TWORZENIE LUB USUWANIE PLANU TRENINGOWEGO  (/training_plan):
+#### TWORZENIE, USUWANIE LUB EDYCJA PLANU TRENINGOWEGO  (/training_plan):
 ```
 headers standardowo x-access-token
 
@@ -346,4 +345,83 @@ wyjaśnienie responsea:
 ```
 headers standardowo x-access-token
 metoda: GET
+```
+
+
+#### PRZYPISANIE TRAINING PLANU DO CURRENT USERA  (/assign_training_plan):
+```
+headers standardowo x-access-token
+body:
+{
+metoda: POST
+body: {
+"training_plan_id": 1
+}
+```
+
+#### ODPISANIE TRAINING PLANU OD CURRENT USERA  (/detach_training_plan):
+```
+headers standardowo x-access-token
+body:
+{
+metoda: POST
+body: {
+"training_plan_id": 1
+}
+```
+
+#### ZWRACA WSZYSTKIE TRAININGSY  (/trainings):
+```
+metoda: GET
+headers standardowo x-access-token
+```
+
+#### ZWRACA TRAINING BY ID  (/training/id):
+```
+metoda: GET
+headers standardowo x-access-token
+```
+
+
+#### TWORZENIE LUB USUWANIE TRAININGU(ĆWICZENIA)  (/training):
+```
+headers standardowo x-access-token
+
+DODAWANIE
+metoda: POST
+body: {
+"name": "Martwy ciąg",
+"body_part": "Całe ciało"
+}
+
+USUWANIE:  (TYLKO ADMIN)
+body: {"id": 1}
+```
+
+#### PRZYPISANIE TRAININGU(ĆWICZENIA) DO TRAINING PLANU  (/assign_trainings):
+```
+headers standardowo x-access-token
+metoda: POST
+body: {
+	"trainings": [
+                {
+			    "training_id": 1,          # id naszego ćwiczenia z bazy
+			    "training_plan_id": 0,      # id planu do którego przypisać ćwiczenie
+                "training_series": 5,
+			    "training_repeats": 9,
+			    "breaks_series": 20,
+			    "breaks_trainings": 120,
+			    "weekday": 1
+                },
+                {
+			    "training_id": 1,
+                "training_plan_id": 0,
+			    "training_series": 5,
+			    "training_repeats": 9,
+			    "breaks_series": 20,
+			    "breaks_trainings": 120,
+			    "weekday": 1
+                }
+            ] 
+}
 ```

@@ -219,7 +219,7 @@ def assign_plan(current_user):
     data = request.get_json()
     if not data:
         return make_response(jsonify({'message': 'Bad Request'}), 400)
-    assign_plan = DietPlanUser(user_id=data['user_id'], diet_plan_id=data['diet_plan_id'])
+    assign_plan = DietPlanUser(user_id=current_user.id, diet_plan_id=data['diet_plan_id'])
 
     print(assign_plan)
     db.session.add(assign_plan)

@@ -217,7 +217,7 @@ def assign_plan(current_user):
     data = request.get_json()
     if not data:
         return make_response(jsonify({'message': 'Bad Request'}), 400)
-    assign_plan = TrainingPlanUser(user_id=data['user_id'], training_plan_id=data['training_plan_id'])
+    assign_plan = TrainingPlanUser(user_id=current_user.id, training_plan_id=data['training_plan_id'])
 
     print(assign_plan)
     db.session.add(assign_plan)
@@ -226,7 +226,7 @@ def assign_plan(current_user):
     return jsonify({'message': 'Training plan assigned!'})
 
 """Detach training plan from user"""
-@training_api.route('/detach_train_plan', methods=['POST'])
+@training_api.route('/detach_training_plan', methods=['POST'])
 @token_required
 def detach_plan(current_user):
     data = request.get_json()
