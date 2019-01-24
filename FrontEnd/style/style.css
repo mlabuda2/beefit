@@ -7,22 +7,6 @@
   left: 0;
   width: 100%; }
 
-a {
- 	display: inline;
- 	position: relative;
- 	}
-
-a:hover:after {
- 	background: rgba(0,0,0,.8);
- 	border-radius: 7px;
- 	bottom: 100px;
- 	color: #fff;
- 	content: attr(title);
- 	padding: 5px 55px;
- 	position: absolute;
- 	white-space: nowrap;
- 	}
-
 #start-with-us, #favorite-food, #calorie-burner {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -43,6 +27,13 @@ a:hover:after {
 #calorie-burner {
   background: url("/src/img/lift.jpg");
   background-size: 100% 100%; }
+
+.form-group {
+  width: 40%; }
+
+.btn-bm {
+  width: 40%;
+  text-align: left; }
 
 .footer {
   position: fixed;

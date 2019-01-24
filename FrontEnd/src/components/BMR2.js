@@ -46,7 +46,7 @@ export default class BMR extends Component{
   }
     render(){
       return(
-        <div id="BMR">
+        <div id="BMR" className="col-lg-4 col-md-4 col-xs-12 className="kalkulator>
               <h4>Twój kalkulator BMR metoda Mifflin-St Jeor</h4>
                     <form>
                     <div className="form-group">
@@ -89,7 +89,7 @@ export default class BMR extends Component{
                                 value={this.state.Weight}
                                 />
                     </div>
-                    <button className="btn btn-lg btn-primary btn-block" onClick={this.onClick.bind(this)}>Sprawdż swoje BMR</button> <br />
+                    <button className="btn btn-md btn-success btn-bm" onClick={this.onClick.bind(this)}>Sprawdż swoje BMR</button> <br />
                     <div className="form-group">
                             <label>Twoje BMR:</label>
                                 <input className="form-control"

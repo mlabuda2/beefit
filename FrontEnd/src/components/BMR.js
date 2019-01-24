@@ -52,8 +52,8 @@ export default class BMR extends Component{
   }
     render(){
       return(
-        <div id="BMR">
-        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR2()}>Kalkulator BMR metoda Mifflin-St Jeor</button>
+        <div id="BMR" className="col-lg-4 col-md-4 col-xs-12">
+        {/*<button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR2()}>Kalkulator BMR metoda Mifflin-St Jeor</button> przycisk nie rozwija kalkulatora*/}
         {
           this.state.showBMR2?
           <div>

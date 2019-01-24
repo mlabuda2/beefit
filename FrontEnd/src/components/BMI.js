@@ -51,11 +51,11 @@ export default class BMI extends Component{
   }
     render(){
       return(
-        <div id="BMI">
-        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMI()}>Kalkulator BMI</button>
+        <div id="BMI" className="col-lg-4 col-md-4 col-xs-12">
+        <button className="btn btn-lg btn-defoult btn-block" onClick={()=>this.showBMI()}>Kliknij aby obliczyć BMI</button>
         {
           this.state.showBMI?
-          <div>
+          <div className="kalkulator">
               <h4>Twój kalkulator BMI</h4>
                     <form>
                     <div className="form-group">
@@ -80,7 +80,7 @@ export default class BMI extends Component{
                                 value={this.state.Weight}
                                 />
                     </div>
-                    <button className="btn btn-lg btn-primary btn-block" onClick={this.onClick.bind(this)}>Sprawdż swoje BMI</button> <br />
+                    <button className="btn btn-md btn-success btn-bm" onClick={this.onClick.bind(this)}>Sprawdż swoje BMI</button> <br />
                     <div className="form-group">
                             <label>Twoje BMI:</label>
                                 <input className="form-control"

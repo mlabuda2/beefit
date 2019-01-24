@@ -3,6 +3,7 @@ import axios from "axios";
 export const LOGIN_USER = "login_user";
 export const REGISTER_USER = "register_user";
 export const FETCH_DIET_PLANS = "fetch_diet_plans";
+export const CREATE_DIET_PLANS = "create_diet_plans";
 export const DELETE_DIET_PLAN = "delete_diet_plan";
 export const SELECTED_DIET_PLAN = "selected_diet_plan";
 
@@ -42,7 +43,20 @@ export function registerUser(values, callback) {
   };
 }
 
-export function fetchDietPlans() {
+export function createDietPlans() {
+  let token = localStorage.getItem('t8k3n');
+  const request = axios
+    .post(`${ROOT_URL}/assign_plan`, { 'diet_plan_id': id}, {
+        headers: { 'x-access-token': token },
+    })
+    .then(() => callback());
+
+  return {
+    type: CREATE_DIET_PLANS,
+    payload: id
+  };
+
+}export function fetchDietPlans() {
   let token = localStorage.getItem('t8k3n');
   const request = axios
     .get(`${ROOT_URL}/user_plans`, {
