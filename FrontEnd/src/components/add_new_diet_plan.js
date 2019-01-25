@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { registerUser } from "../actions";
+import { createDietPlans } from "../actions";
 
 class AddNewDietPlan extends Component {
     renderField(field) {
@@ -21,7 +21,7 @@ class AddNewDietPlan extends Component {
     }
 
     onSubmit(values) {
-        this.props.registerUser(values, () => {
+        this.props.addDietPlan(values, () => {
             this.props.history.push("/");
         });
     }
@@ -46,7 +46,7 @@ class AddNewDietPlan extends Component {
                     name="email"
                     component={this.renderField}
                 />
-                <button type="submit" className="btn btn-primary">Register your account</button>
+                <button type="submit" className="btn btn-primary">Dodaj nowy plan</button>
             </form>
         );
     }
@@ -73,5 +73,5 @@ function validate(values) {
 
 export default withRouter(reduxForm({
     validate,
-    form: "AddNewDietPlan"
-})(connect(null, { registerUser })(RegisterUser)));
+    form: "AddNewDietForm"
+})(connect(null, { createDietPlans })(AddNewDietPlan)));

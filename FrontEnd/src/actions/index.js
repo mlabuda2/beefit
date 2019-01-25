@@ -43,20 +43,19 @@ export function registerUser(values, callback) {
   };
 }
 
-export function createDietPlans() {
+export function createDietPlans(values, callback) {
   let token = localStorage.getItem('t8k3n');
   const request = axios
-    .post(`${ROOT_URL}/assign_plan`, { 'diet_plan_id': id}, {
-        headers: { 'x-access-token': token },
-    })
+    .post(`${ROOT_URL}/assign_plan`,  values)
     .then(() => callback());
 
   return {
     type: CREATE_DIET_PLANS,
-    payload: id
+    payload: request
   };
+}
 
-}export function fetchDietPlans() {
+export function fetchDietPlans() {
   let token = localStorage.getItem('t8k3n');
   const request = axios
     .get(`${ROOT_URL}/user_plans`, {
