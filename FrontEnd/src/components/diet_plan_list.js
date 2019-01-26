@@ -33,12 +33,15 @@ class DietPlanList extends Component {
     const { diet_plans } = this.props;
     if (diet_plans === null || diet_plans.length == 0) {
       return (
-        <div></div>
+        <div>
+          <button type="submit" className="btn btn-success" onClick={() => this.props.history.push("/home/diet-plans/assign_plan")}>Create new plan</button>
+        </div>
       );
     }
     return (
         <ul className="list-group col-sm-4">
           <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home")}>Back</button>
+          <button type="submit" className="btn btn-success" onClick={() => this.props.history.push("/home/diet-plans/assign_plan")}>Create new plan</button>
             {/* console.log(diet_plans) */}
             {this.renderList()}
         </ul>
