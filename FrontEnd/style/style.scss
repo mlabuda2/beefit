@@ -39,6 +39,7 @@ $body-defoult-float: left;
 .diet-plan{
   label{
     margin-right: 5%;
+    padding-left: 0;
   }
     input{
       width: 40%;
@@ -52,9 +53,14 @@ $body-defoult-float: left;
     width: 15%;
     margin: 5px 5px;
   }
+  .btn{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 .form-group{
     width: 40%;
+  padding-left: 0;
   }
 
 .btn-bm{

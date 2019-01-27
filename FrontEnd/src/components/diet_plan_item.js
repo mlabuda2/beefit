@@ -13,6 +13,7 @@ class DietPlanItem extends Component {
     }
   }
 
+
   onDeleteClick() {
     console.log("Inside of: onDeleteClick()");
     const { id } = this.props.match.params;

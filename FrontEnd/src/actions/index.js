@@ -45,9 +45,11 @@ export function registerUser(values, callback) {
 
 export function createDietPlans(values, callback) {
   let token = localStorage.getItem('t8k3n');
-  const request = axios
-    .post(`${ROOT_URL}/assign_plan`,  values)
-    .then(() => callback());
+  // const request = axios
+  //   .post(`${ROOT_URL}/assign_plan`,  values)
+  //   .then(() => callback());
+  sleep(1000);
+  callback();
 
   return {
     type: CREATE_DIET_PLANS,

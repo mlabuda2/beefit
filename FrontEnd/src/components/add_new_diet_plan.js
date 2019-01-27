@@ -26,16 +26,25 @@ class AddNewDietPlan extends Component {
         });
     }
 
+    onAddNewPlan() {
+        const id = 2;
+
+        this.props.createDietPlan(id, () => {
+            this.props.history.push("/home/diet-plans");
+        });
+    }
+
     render() {
         const { handleSubmit } = this.props;
 
         return (
             <div className="container diet-plan">
+                <button type="submit" className="btn btn-primary" onClick={() => this.props.history.push("/home")}>Back</button>
                 <h2>Twój plan</h2>
                 <p><input name="Wpisz nazwę swojego planu"/></p>
                 <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                        <label htmlFor="sel1">Monday</label>
+                        <label htmlFor="sel1" className="col-lg-1 col-md-1">Monday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -57,7 +66,7 @@ class AddNewDietPlan extends Component {
                         </select>
                     </div>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                    <label htmlFor="sel1">Tuesday</label>
+                    <label htmlFor="sel1" className="col-lg-1 col-md-1">Tuesday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -79,7 +88,7 @@ class AddNewDietPlan extends Component {
                         </select>
                     </div>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                        <label htmlFor="sel1">Wednesday</label>
+                        <label htmlFor="sel1" className="col-lg-1 col-md-1">Wednesday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -101,7 +110,7 @@ class AddNewDietPlan extends Component {
                         </select>
                     </div>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                    <label htmlFor="sel1">Thursday</label>
+                    <label htmlFor="sel1" className="col-lg-1 col-md-1">Thursday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -123,7 +132,7 @@ class AddNewDietPlan extends Component {
                         </select>
                     </div>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                    <label htmlFor="sel1">Friday</label>
+                    <label htmlFor="sel1" className="col-lg-1 col-md-1">Friday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -145,7 +154,7 @@ class AddNewDietPlan extends Component {
                         </select>
                     </div>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                        <label htmlFor="sel1">Saturday</label>
+                        <label htmlFor="sel1" className="col-lg-1 col-md-1">Saturday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -167,7 +176,7 @@ class AddNewDietPlan extends Component {
                         </select>
                     </div>
                     <div className="form-group col-lg-10 col-md-10 col-xs-12">
-                        <label htmlFor="sel1">Sunday</label>
+                        <label htmlFor="sel1" className="col-lg-1 col-md-1">Sunday</label>
                         <select className="form-control col-lg-3 col-md-3" id="sel1">
                             <option>Kurczak</option>
                             <option>Ryż</option>
@@ -188,7 +197,7 @@ class AddNewDietPlan extends Component {
                             <option>500</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary">Dodaj nowy plan</button>
+                    <button type="submit" className="btn btn-success col-lg-3 col-md-3" onClick={this.onAddNewPlan.bind(this)}>Dodaj nowy plan</button>
                 </form>
             </div>
         );

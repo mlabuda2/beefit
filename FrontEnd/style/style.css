@@ -29,7 +29,8 @@
   background-size: 100% 100%; }
 
 .diet-plan label {
-  margin-right: 5%; }
+  margin-right: 5%;
+  padding-left: 0; }
 .diet-plan input {
   width: 40%;
   color: rgba(55, 87, 219, 0.65); }
@@ -39,9 +40,13 @@
 .diet-plan .time-input {
   width: 15%;
   margin: 5px 5px; }
+.diet-plan .btn {
+  margin-top: 5px;
+  margin-bottom: 5px; }
 
 .form-group {
-  width: 40%; }
+  width: 40%;
+  padding-left: 0; }
 
 .btn-bm {
   width: 40%;
