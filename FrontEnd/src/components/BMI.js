@@ -80,7 +80,7 @@ export default class BMI extends Component{
                                 value={this.state.Weight}
                                 />
                     </div>
-                    <button className="btn btn-md btn-success btn-bm" onClick={this.onClick.bind(this)}>Sprawdż swoje BMI</button> <br />
+                    <button className="btn btn-lg btn-primary btn-block" onClick={this.onClick.bind(this)}>Sprawdż swoje BMI</button> <br />
                     <div className="form-group">
                             <label>Twoje BMI:</label>
                                 <input className="form-control"
