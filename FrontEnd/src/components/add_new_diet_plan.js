@@ -21,8 +21,8 @@ class AddNewDietPlan extends Component {
     }
 
     onSubmit(values) {
-        this.props.addDietPlan(values, () => {
-            this.props.history.push("/");
+        this.props.createDietPlans(values, () => {
+            this.props.history.push("/home/diet-plans");
         });
     }
 
@@ -30,24 +30,167 @@ class AddNewDietPlan extends Component {
         const { handleSubmit } = this.props;
 
         return (
-            <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <Field
-                    label="Username"
-                    name="username"
-                    component={this.renderField}
-                />
-                <Field
-                    label="Password"
-                    name="password"
-                    component={this.renderField}
-                />
-                <Field
-                    label="Email"
-                    name="email"
-                    component={this.renderField}
-                />
-                <button type="submit" className="btn btn-primary">Dodaj nowy plan</button>
-            </form>
+            <div className="container diet-plan">
+                <h2>Twój plan</h2>
+                <p><input name="Wpisz nazwę swojego planu"/></p>
+                <form className="form-inline" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                        <label htmlFor="sel1">Monday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                    <label htmlFor="sel1">Tuesday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                        <label htmlFor="sel1">Wednesday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                    <label htmlFor="sel1">Thursday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                    <label htmlFor="sel1">Friday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                        <label htmlFor="sel1">Saturday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-lg-10 col-md-10 col-xs-12">
+                        <label htmlFor="sel1">Sunday</label>
+                        <select className="form-control col-lg-3 col-md-3" id="sel1">
+                            <option>Kurczak</option>
+                            <option>Ryż</option>
+                            <option>Mango</option>
+                            <option>Tuńczyk</option>
+                            <option>Wieprzowina</option>
+                            <option>Cielęcina</option>
+                            <option>Banan</option>
+                        </select>
+                        <input type="time" name="usr_time" className="time-input"/>
+                        <select className="form-control">
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>300</option>
+                            <option>400</option>
+                            <option>500</option>
+                        </select>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Dodaj nowy plan</button>
+                </form>
+            </div>
         );
     }
 }

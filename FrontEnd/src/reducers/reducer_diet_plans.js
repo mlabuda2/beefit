@@ -6,7 +6,7 @@ export default function(state = {}, action) {
     case DELETE_DIET_PLAN:
       return _.omit(state, action.payload);
     case CREATE_DIET_PLANS:
-      return _.omit(state, action.payload);
+      return [action.payload, ...state];
     case FETCH_DIET_PLANS:
       return _.mapKeys(action.payload.data.my_diet_plans, "id_plan")
     default:

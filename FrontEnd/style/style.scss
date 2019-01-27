@@ -36,6 +36,23 @@ $body-defoult-float: left;
   background: url("/src/img/lift.jpg");
   background-size: 100% 100%;
 }
+.diet-plan{
+  label{
+    margin-right: 5%;
+  }
+    input{
+      width: 40%;
+      color: rgba(55, 87, 219, 0.65);
+    }
+    #sel1{
+      width: 100%;
+      margin: 5px 5px;
+    }
+  .time-input{
+    width: 15%;
+    margin: 5px 5px;
+  }
+}
 .form-group{
     width: 40%;
   }
