@@ -5,7 +5,7 @@ export default class BMR extends Component{
       constructor(props) {
           super(props);
           this.state = {bmr: '',
-                        showBMR2:false};
+                        showBMR:false};
 
           this.handleGenderChange = this.handleGenderChange.bind(this);
           this.handleAgeChanged = this.handleAgeChanged.bind(this);
@@ -45,19 +45,19 @@ export default class BMR extends Component{
       this.setState({aktywne: BMR * 1.5});
       this.setState({nieaktywne: BMR * 0.85});
   }
-  showBMR2(){
+  showBMR(){
     this.setState({
-      showBMR2:!this.state.showBMR2
+      showBMR:!this.state.showBMR
     })
   }
     render(){
       return(
         <div id="BMR" className="col-lg-4 col-md-4 col-xs-12">
-        {/*<button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR2()}>Kalkulator BMR metoda Mifflin-St Jeor</button> przycisk nie rozwija kalkulatora*/}
+        <button className="btn btn-lg btn-primary btn-block" onClick={()=>this.showBMR()}>Kliknij aby obliczyć BMR</button>
         {
-          this.state.showBMR2?
+          this.state.showBMR?
           <div>
-              <h4>Twój kalkulator BMR metoda Mifflin-St Jeor</h4>
+              <h4>Twój kalkulator BMR</h4>
                     <form>
                     <div className="form-group">
                       <select className="form-control" value={this.state.Gender} onChange={this.handleGenderChange}>
